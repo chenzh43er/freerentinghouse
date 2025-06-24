@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Homeonbudget Detail</title>
+    <title>Freerentinghouse.info Detail</title>
     <meta name="description"
         content="Find detailed information on Chugach View, including address, phone number, services, and more.">
     <link type="text/css" rel="stylesheet" href="./Public/Css/hs-style.css">
@@ -122,6 +122,23 @@
             grid-template-columns: repeat(4, 1fr);
             grid-gap: 10px;
             column-gap: 30px;
+        }
+    }
+
+    .suggestHouseUl {
+        display: grid;
+        grid-gap: 20px;
+    }
+
+    @media screen and (min-width: 500px) {
+        .suggestHouseUl {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media screen and (min-width: 500px) {
+        .suggestHouseUl {
+            grid-template-columns: repeat(2, 1fr);
         }
     }
 </style>
@@ -469,6 +486,11 @@
 
             <div class="adswp" style="height: auto !important;" data-eusoft-scrollable-element="1" id="detail_adv2">
                 Advertise
+            </div>
+
+            <div style="margin: 30px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                <ul class="suggestHouseUl" id = "down_list">
+                </ul>
             </div>
 
 
@@ -1139,6 +1161,55 @@
         init();
     </script>
 
+    <script type="module">
+        import { fetchRandomHousesByState, fetchDataById } from './Public/Js/dataGet.js';
+
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            let display_state = urlParams.get('state');
+            let display_city = urlParams.get('city');
+            let display_district = urlParams.get('district');
+
+            // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
+            if (!display_state) {
+                display_state = 'Berlin'; // 或你希望的默认值
+            }
+
+            const { data, error } = await fetchRandomHousesByState(display_state,6);
+
+            if (error) {
+                console.error("获取房源数据失败：", error.message);
+                return;
+            }
+
+            $(document).ready(function () {
+                let html = ``;
+
+                data.forEach(house => {
+                    const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + house.mainpic + "/";
+                    const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+
+                    html += `<li>
+                    <div class="most-box">
+                      <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                      <img src="${serverPic + (picsObj[0] || '')}"
+                           alt="section-8-pays-for-your-rental-costs" class="most-img">
+                      <h5 class="most-tit">${house.name}</h5>
+                      <div class="most-bottom">
+                        <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                      </div>
+                      <h5 class="most-tit">${house.price} € Kaltmiete zzgl. NK</h5>
+                    </div>
+                  </li>`;
+                });
+
+                document.getElementById("down_list").innerHTML = html;
+            });
+        }
+
+        init();
+    </script>
 
     <script>
         function toForm(){
