@@ -99,7 +99,7 @@
         str += '<td><img src=\"/Public/Images/delet.png\" class=\"delet\" alt=\"delet\"></td>';
         str += '</tr>';
         $(".favourites_added tbody").append(str);
-        console.log("footer: add to the table")
+        //console.log("footer: add to the table")
       });
     }
   }
@@ -110,7 +110,7 @@
       $(".total").text(items.length);
 
     }
-    console.log("update table name")
+    //console.log("update table name")
   }
 
   $(".shortListButton").click(function (event) {
@@ -161,7 +161,7 @@
         }
         if (txt2 === txt && href2 === href) {
           $(this).removeClass('remove');
-          console.log("footer: remove class .remove")
+          //console.log("footer: remove class .remove")
         }
       })
       updateTable();
@@ -178,7 +178,7 @@
       $(".total").text(items.length);
 
       var arrItems = arr.length;
-      console.log(arrItems)
+      //console.log(arrItems)
       if (numItems > 1) {
         $(".option").text('options');
       } else {
@@ -195,7 +195,7 @@
         var arrin = arr[i];
         $(".statetitle").each(function (i, item) {
           if ($(this).text() == arrin) {
-            console.log($(this).text())
+            //console.log($(this).text())
             $(this).siblings(".most-bottom").find(".like").addClass("remove")
             $(this).siblings(".imgli-box").find(".like").addClass("remove")
             $(this).siblings(".more").find(".like").addClass("remove")
@@ -245,7 +245,7 @@
           .then(data => {
             document.getElementById('asidePage').innerHTML = data;
             const lang = getLangFromPath()
-            console.log(lang)
+            //console.log(lang)
             if(lang == "de"){
               document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
             }else
@@ -276,7 +276,7 @@
     script.async = true;
 
     script.onload = function () {
-      //console.log(`${src} 加载完成`);
+      ////console.log(`${src} 加载完成`);
       if (callback) callback(); // 加载完成后执行回调函数
     };
 
@@ -295,7 +295,7 @@
       const postId = params.get('postid'); // "John"
 
       const result = post[postId]
-      //console.log(result)
+      ////console.log(result)
 
       const titleDiv = `<div class="title_box" data-eusoft-scrollable-element="1">
                 <div class="bread_crumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
