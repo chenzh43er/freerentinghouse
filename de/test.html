@@ -95,5 +95,35 @@
   </a>
 </div>
 
+<div class="button-div" onclick="handleClick()">
+  点击这里
+</div>
+
+<script>
+  function handleClick() {
+    alert("按钮被点击！");
+  }
+</script>
+
+<style>
+  .button-div {
+    background-color: #f5b609;  /* 背景色 */
+    color: white;               /* 字体颜色 */
+    padding: 12px 20px;         /* 内边距 */
+    text-align: center;         /* 居中文本 */
+    border-radius: 8px;         /* 圆角 */
+    cursor: pointer;            /* 鼠标指针变为手型 */
+    font-size: 16px;            /* 字体大小 */
+    font-weight: bold;          /* 字体加粗 */
+    user-select: none;          /* 禁止选中文本 */
+    transition: background-color 0.3s;
+  }
+
+  .button-div:hover {
+    background-color: #e0a800; /* 悬浮时稍微变深 */
+  }
+</style>
+
+
 </body>
 </html>

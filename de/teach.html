@@ -484,6 +484,10 @@
             </div>
         </div>
 
+        <div>
+            Click Here
+        </div>
+
 
         <p class="how-to" id = "lang_how1">
             Affordable Housing is
@@ -862,7 +866,7 @@
 <script>
     $(document).ready(function () {
         document.getElementById("teach_adv1").innerHTML = returnAdvWord()
-        document.getElementById("aside_adv").innerHTML = returnAdvWord()
+
 
         const teach_adv1 = document.getElementById('teach_adv1')
         if (teach_adv1) {
@@ -879,20 +883,8 @@
             observer.observe(teach_adv1);
         }
 
-        const aside_adv = document.getElementById('aside_adv')
-        if (aside_adv) {
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        loadListAdv_Test(entry.target);
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, {
-                rootMargin: '5px',
-            });
-            observer.observe(aside_adv);
-        }
+        //titleReturn
+        document.title = `${returnWebStr()} Teach.`;
     })
 </script>
 
