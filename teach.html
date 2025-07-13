@@ -14,6 +14,7 @@
     <link type="text/css" rel="stylesheet" href="./Public/Css/lch-office.css">
     <script src="./Public/Js/utlParam.js"></script>
     <script src="./Public/Js/common.js"></script>
+    <script src="./Public/Js/googleAdv.js"></script>
     <link rel="icon" href="./Public/Images/icon.png" type="image/png">
     <style>
         .loc-btn{
@@ -39,6 +40,19 @@
             background-color: #e0a800; /* 悬浮时稍微变深 */
         }
     </style>
+
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script>
+        window.googletag = window.googletag || {cmd: []};
+
+        googletag.cmd.push(function() {
+            googletag.defineSlot('/6355419/Travel/Europe/France/Paris', 'fluid', 'div-gpt-ad-123')
+                .addService(googletag.pubads());
+            googletag.enableServices();
+        });
+
+
+    </script>
 </head>
 
 <body aria-hidden="false">
@@ -913,7 +927,10 @@
 <script>
     function loadListAdv_Test(el) {
         // 插入 <ins> HTML
-        el.innerHTML = returnAdvTestWord();
+        el.innerHTML = returnTestDiv();
+        googletag.cmd.push(function() {
+            googletag.display('div-gpt-ad-123');
+        });
     }
 </script>
 

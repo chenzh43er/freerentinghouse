@@ -2,139 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>分页 UI - 当前页高亮蓝色</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluid 广告 - 固定高度 100px</title>
   <style>
-    .pagination {
+    /* 模拟广告内容固定高度 */
+    .ad-content {
+      height: 100px;
+      background-color: #e0e0e0;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
       align-items: center;
-      gap: 8px;
-      padding: 16px;
-    }
-
-    .pagination button,
-    .pagination .ellipsis {
-      padding: 8px 14px;
+      justify-content: center;
+      font-family: sans-serif;
       font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      background-color: #289de9;   /* 非当前页默认背景 */
-      color: white;
-      cursor: pointer;
-      border: 2px solid transparent;
-    }
-
-    .pagination .ellipsis {
-      background-color: transparent;
-      color: #999;
-      cursor: default;
-    }
-
-    .pagination button[disabled] {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-
-    /* ✅ 当前页：白底 + 蓝字 + 蓝边框 */
-    .pagination .active {
-      background-color: white;
-      color: #289de9;
-      border: 2px solid #289de9;
-    }
-
-    .pagination .active:hover {
-      background-color: white;
-      color: #289de9;
-      border: 2px solid #289de9;
-    }
-
-    @media (max-width: 480px) {
-      .pagination {
-        gap: 6px;
-        padding: 12px;
-      }
-
-      .pagination button,
-      .pagination .ellipsis {
-        padding: 6px 10px;
-        font-size: 14px;
-      }
+      color: #333;
+      border: 1px dashed #aaa;
     }
   </style>
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+  <script>
+    window.googletag = window.googletag || {cmd: []};
+
+    googletag.cmd.push(function() {
+      googletag.defineSlot('/6355419/Travel/Europe/France/Paris', 'fluid', 'div-gpt-ad-123')
+              .addService(googletag.pubads());
+      googletag.enableServices();
+    });
+  </script>
 </head>
 <body>
 
-<div class="pagination" id="paginationContainer"></div>
+<h2>Fluid 广告容器（目标高度 100px）</h2>
 
+
+
+<!-- 广告容器 -->
+<div id="div-gpt-ad-123" style="width: 100%;"></div>
+
+<!-- 模拟广告内容插入（真实情况由 GAM 创意填充） -->
 <script>
-  const urlParams = new URLSearchParams(window.location.search);
-  let currentPage = parseInt(urlParams.get('page')) || 1;
-  const maxPage = 10;
+  googletag.cmd.push(function() {
+    googletag.display('div-gpt-ad-123');
+  });
 
-  const container = document.getElementById('paginationContainer');
-
-  function createButton(label, page, isActive = false, isDisabled = false) {
-    const btn = document.createElement('button');
-    btn.textContent = label;
-    if (isActive) btn.classList.add('active');
-    if (isDisabled) btn.disabled = true;
-    btn.onclick = () => goToPage(page);
-    return btn;
-  }
-
-  function createEllipsis() {
-    const span = document.createElement('span');
-    span.className = 'ellipsis';
-    span.textContent = '...';
-    return span;
-  }
-
-  function goToPage(page) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('page', page);
-    window.location.href = url.toString();
-  }
-
-  function renderPagination() {
-    container.innerHTML = '';
-
-    container.appendChild(createButton('«', currentPage - 1, false, currentPage === 1));
-
-    if (maxPage <= 5) {
-      for (let i = 1; i <= maxPage; i++) {
-        container.appendChild(createButton(i, i, i === currentPage));
-      }
-    } else {
-      if (currentPage <= 2) {
-        for (let i = 1; i <= 3; i++) {
-          container.appendChild(createButton(i, i, i === currentPage));
-        }
-        container.appendChild(createEllipsis());
-        container.appendChild(createButton(maxPage, maxPage, maxPage === currentPage));
-      } else if (currentPage >= maxPage - 1) {
-        container.appendChild(createButton(1, 1, currentPage === 1));
-        container.appendChild(createEllipsis());
-        for (let i = maxPage - 2; i <= maxPage; i++) {
-          container.appendChild(createButton(i, i, i === currentPage));
-        }
-      } else {
-        container.appendChild(createButton(1, 1));
-        container.appendChild(createEllipsis());
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          container.appendChild(createButton(i, i, i === currentPage));
-        }
-        container.appendChild(createEllipsis());
-        container.appendChild(createButton(maxPage, maxPage));
-      }
-    }
-
-    container.appendChild(createButton('»', currentPage + 1, false, currentPage === maxPage));
-  }
-
-  renderPagination();
+  // ⚠️ 模拟广告内容填充（用于测试，真实环境由 GAM 系统返回广告内容）
+  // 模拟的广告内容：高度固定为 100px
+  const mockAd = document.createElement('div');
+  mockAd.className = 'ad-content';
+  mockAd.innerText = '这是一个模拟的 fluid 测试广告，高度为 100px';
+  document.getElementById('div-gpt-ad-123').appendChild(mockAd);
 </script>
 
 </body>
