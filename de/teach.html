@@ -14,6 +14,7 @@
     <link type="text/css" rel="stylesheet" href="./Public/Css/lch-office.css">
     <script src="./Public/Js/utlParam.js"></script>
     <script src="./Public/Js/common.js"></script>
+    <script src="./Public/Js/googleAdv.js"></script>
     <link rel="icon" href="./Public/Images/icon.png" type="image/png">
     <style>
         .loc-btn{
@@ -39,9 +40,61 @@
             background-color: #e0a800; /* 悬浮时稍微变深 */
         }
     </style>
+
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script>
+        window.googletag = window.googletag || {cmd: []};
+        googletag.cmd.push(function() {
+            googletag.defineSlot('/23284785848/teach', ['fluid'], 'div-gpt-ad-1752473159073-0').addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+
+    <script>
+        window.googletag = window.googletag || {cmd: []};
+        googletag.cmd.push(function() {
+
+            var mapping = googletag.sizeMapping()
+                .addSize([1024, 0], [[728, 90]])   // PC端宽度 >=1024 使用 728x90
+                .addSize([768, 0], [[300, 250]])   // 平板宽度 >=768 使用 300x250
+                .addSize([0, 0], [[300, 250]])     // 移动端 使用 300x250
+                .build();
+
+            googletag.defineSlot('/23284785848/teach/teach_adv1', ['fluid', [300, 250], [728, 90]], 'div-gpt-ad-1752473662406-0')
+                .defineSizeMapping(mapping)
+                .addService(googletag.pubads());
+
+
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+
+
+<!--    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>-->
+<!--    <script>-->
+<!--        window.googletag = window.googletag || {cmd: []};-->
+
+<!--        googletag.cmd.push(function() {-->
+<!--            googletag.defineSlot('/6355419/Travel/Europe/France/Paris', 'fluid', 'div-gpt-ad-123')-->
+<!--                .addService(googletag.pubads());-->
+<!--            googletag.enableServices();-->
+<!--        });-->
+
+
+<!--    </script>-->
 </head>
 
 <body aria-hidden="false">
+
+<!-- /23284785848/teach -->
+<div id='div-gpt-ad-1752473159073-0'>
+    <script>
+        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752473159073-0'); });
+    </script>
+</div>
+
 <defs>
     <symbol id="icon-add" viewBox="0 0 1024 1024">
         <path
@@ -895,7 +948,7 @@
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        loadListAdv_Test(entry.target);
+                        loadTeach_adv(entry.target);
                         obs.unobserve(entry.target);
                     }
                 });
@@ -911,9 +964,12 @@
 </script>
 
 <script>
-    function loadListAdv_Test(el) {
+    function loadTeach_adv(el) {
         // 插入 <ins> HTML
-        el.innerHTML = returnAdvTestWord();
+        el.innerHTML = returnTeach_adv();
+        googletag.cmd.push(function() {
+            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752473662406-0'); });
+        });
     }
 </script>
 

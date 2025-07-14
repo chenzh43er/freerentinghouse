@@ -17,3 +17,9 @@ function returnIndex_adv1(){
 <div id='div-gpt-ad-1752434042868-0' style='min-width: 300px; min-height: 250px;'>
 </div>`
 }
+
+function  returnTeach_adv(){
+    return `<!-- /23284785848/teach/teach_adv1 -->
+<div id='div-gpt-ad-1752473662406-0' style='min-width: 300px; min-height: 90px;'>
+</div>`
+}
