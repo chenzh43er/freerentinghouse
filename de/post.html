@@ -231,6 +231,15 @@
           .then(res => res.text())
           .then(data => {
             document.getElementById('header').innerHTML = data;
+
+            const lang = getLangFromPath()
+            //console.log(lang)
+            if(lang == "de"){
+              document.getElementById("lang_index").innerText="Startseite"
+            }else
+            {
+              document.getElementById("lang_index").innerText="Startseite"
+            }
           });
 
   // 加载 footer

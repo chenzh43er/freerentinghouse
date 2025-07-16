@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="./Public/Js/utlParam.js"></script>
     <script src="./Public/Js/common.js"></script>
+    <script src="./Public/Js/googleAdv.js"></script>
     <link rel="icon" href="./Public/Images/icon.png" type="image/png">
     <style>
         .success-wrap {
@@ -135,9 +136,44 @@
             height: 600px !important;
         }
     </style>
+
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script>
+        window.googletag = window.googletag || {cmd: []};
+        googletag.cmd.push(function() {
+            var mapping = googletag.sizeMapping()
+                .addSize([1024, 0], [[728, 90]])   // PC端宽度 >=1024 使用 728x90
+                .addSize([0, 0], [[300, 250]])     // 移动端 使用 300x250
+                .build();
+
+            googletag.defineSlot('/23284785848/house_result/result_auto', ['fluid'], 'div-gpt-ad-1752655817696-0').addService(googletag.pubads());
+
+            googletag.defineSlot('/23284785848/house_result/result_adv1', ['fluid', [300, 250], [728, 90]], 'div-gpt-ad-1752651327835-0')
+                .defineSizeMapping(mapping)
+                .addService(googletag.pubads());
+
+            googletag.defineSlot('/23284785848/house_result/result_adv2', [[300, 250], 'fluid', [728, 90]], 'div-gpt-ad-1752652886105-0')
+                .defineSizeMapping(mapping)
+                .addService(googletag.pubads());
+
+            googletag.defineSlot('/23284785848/house_result/result_adv3', ['fluid', [300, 250]], 'div-gpt-ad-1752654717056-0').addService(googletag.pubads());
+
+            googletag.defineSlot('/23284785848/house_result/result_adv4', [[300, 600], 'fluid'], 'div-gpt-ad-1752655475092-0').addService(googletag.pubads());
+
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
 </head>
 
 <body>
+
+<!-- /23284785848/house_result/result_auto -->
+<div id='div-gpt-ad-1752655817696-0'>
+    <script>
+        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752655817696-0'); });
+    </script>
+</div>
 
 <header data-eusoft-scrollable-element="1" id = "header">
 </header>
@@ -219,108 +255,6 @@
 </footer>
 
 <script src="./Public/Js/jquery-3.0.0.min.js"></script>
-
-<script>
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted || (window.performance && window.performance.getEntriesByType && String(window.performance.getEntriesByType('navigation')[0].type) === 'back_forward')) {
-            location.reload();
-        }
-    });
-    jQuery(document).ready(function () {
-        updateClassAndTableName()
-        $(".like").click(function () {
-            //login to use save function
-            if (localStorage.userInfo !== undefined) {
-                //if has remove class, localStorage remove an item, class turn to like
-                if ($(this).hasClass("remove")) {
-                    $(this).removeClass("remove");
-                }
-                // if don't have remove class, like class add remove class, get infomation and create a new table row, save it to localStorage
-                else {
-                    $(this).addClass("remove");
-                    $(".if_none").hide()
-                    var eleTop = $(this).offset().top - $(document).scrollTop();
-                    var eleLeft = $(this).offset().left;
-                    var likeTop = $(".shortListButton").offset().top - $(document).scrollTop();
-                    var likeLeft = $(".shortListButton").offset().left;
-                    tranlateY = likeTop - eleTop + 10;
-                    tranlateX = likeLeft - eleLeft + 10;
-                    var eleFly = $(this).children(".add-fly");
-                    var eleFlyItem = eleFly.children(".add-fly-item");
-                    eleFly.css("visibility", "visible")
-                    eleFly.css("transform", "translateX(" + tranlateX + "px)");
-                    eleFlyItem.css("transform", "translateY(" + tranlateY + "px)");
-                    // $(".icon-cacl").css("transform", "scale(1.2)");
-                    setTimeout(function () {
-                        eleFly.css({ "visibility": "hidden", "transform": "translateX(" + 0 + "px)" });
-                        eleFlyItem.css("transform", "translateY(" + 0 + "px)");
-                    }, 290);
-                }
-                var txt = $(".title").text();
-                var href = window.location.pathname;
-                refresh(txt, href);
-                updateClassAndTableName();
-                //console.log("update for click like")
-            } else {
-                $("#login").css('display', 'block')
-            }
-        });
-
-        function updateClassAndTableName() {
-            var clinicMark = localStorage.getItem('clinicMark');
-            if (clinicMark) {
-                var items = JSON.parse(clinicMark);
-                $(".total").text(items.length);
-                //add remove class
-                $(".detail-left .title_box .title").each(function () {
-                    var name = $(this).text();
-                    var href = window.location.pathname;
-                    // Check if the name exists in the items array
-                    var exists = items.some(function (item) {
-                        return item.txt === name && item.href === href;
-                    });
-                    if (exists) {
-                        var element = $(this).parents(".detail-left").find(".like")
-                        element.addClass("remove");
-                        //console.log("add remove class", element)
-                    }
-                });
-            }
-            //console.log("update class and table name")
-        }
-        function refresh(txt, href) {
-            var existingItems = localStorage.getItem("clinicMark")
-                ? JSON.parse(localStorage.getItem("clinicMark"))
-                : [];
-            // //console.log(existingItems);
-            var index = existingItems.findIndex(item => item.txt === txt && item.href === href)
-            if (index !== -1) {
-                // Item already exists, remove it
-                existingItems.splice(index, 1);
-                //console.log("Item already exists, remove it", existingItems)
-            } else {
-                // Item does not exist, add it
-                existingItems.push({ txt: txt, href: href });
-                //console.log("Item does not exist, add it", existingItems)
-            }
-            localStorage.setItem("clinicMark", JSON.stringify(existingItems));
-
-        }
-    })
-
-
-    function returnToList(){
-
-        const urlParams = new URLSearchParams(window.location.search);
-
-        let display_state = urlParams.get('state');
-        let display_city = urlParams.get('city');
-        let display_district = urlParams.get('district');
-
-
-        window.location.href = `./list.html?state=${display_state}&city=${display_city}&district=${display_district}`;
-    }
-</script>
 
 <script>
     // 加载 header
@@ -437,7 +371,7 @@
                       <div class="most-bottom">
                         <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
                       </div>
-                      <h5 class="most-tit">${house.price} € Kaltmiete zzgl. NK</h5>
+                      <h5 class="most-tit">${house.price} Kaltmiete zzgl. NK</h5>
                     </div>
                   </li>`;
 
@@ -456,8 +390,9 @@
                 const observer = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            loadListAdv_Test(entry.target);
+                            loadResult_adv3(entry.target);
                             obs.unobserve(entry.target);
+                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752654717056-0'); });
                         }
                     });
                 }, {
@@ -509,7 +444,7 @@
                       <div class="most-bottom">
                         <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
                       </div>
-                      <h5 class="most-tit">${house.price} € Kaltmiete zzgl. NK</h5>
+                      <h5 class="most-tit">${house.price} Kaltmiete zzgl. NK</h5>
                     </div>
                   </li>`;
             });
@@ -567,14 +502,16 @@
     $(document).ready(function () {
         document.getElementById("result_adv1").innerHTML = returnAdvWord()
         document.getElementById("result_adv2").innerHTML = returnAdvWord()
+        document.getElementById("RightBottom_adbox").innerHTML = returnAdvWord()
 
         const result_adv1 = document.getElementById('result_adv1')
         if (result_adv1) {
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        loadListAdv_Test(entry.target);
+                        loadResult_adv1(entry.target);
                         obs.unobserve(entry.target);
+                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752651327835-0'); });
                     }
                 });
             }, {
@@ -588,14 +525,31 @@
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        loadListAdv_Test(entry.target);
+                        loadResult_adv2(entry.target);
                         obs.unobserve(entry.target);
+                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752652886105-0'); });
                     }
                 });
             }, {
                 rootMargin: '5px',
             });
             observer.observe(result_adv2);
+        }
+
+        const RightBottom_adbox = document.getElementById('RightBottom_adbox')
+        if (RightBottom_adbox) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        loadResult_adv4(entry.target);
+                        obs.unobserve(entry.target);
+                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752655475092-0'); });
+                    }
+                });
+            }, {
+                rootMargin: '5px',
+            });
+            observer.observe(RightBottom_adbox);
         }
 
         //titleReturn
@@ -607,6 +561,22 @@
     function loadListAdv_Test(el) {
         // 插入 <ins> HTML
         el.innerHTML = returnAdvTestWord();
+    }
+
+    function loadResult_adv1(el){
+        el.innerHTML = returnResult_adv1();
+    }
+
+    function loadResult_adv2(el){
+        el.innerHTML = returnResult_adv2();
+    }
+
+    function loadResult_adv3(el){
+        el.innerHTML = returnResult_adv3();
+    }
+
+    function loadResult_adv4(el){
+        el.innerHTML = returnResult_adv4();
     }
 </script>
 

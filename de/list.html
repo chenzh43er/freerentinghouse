@@ -16,6 +16,8 @@
 <!--    <script src="./Public/Js/pagination.min.js"></script>-->
     <script src="./Public/Js/utlParam.js"></script>
     <script src="./Public/Js/common.js"></script>
+    <script src="./Public/Js/googleAdv.js"></script>
+
     <link rel="icon" href="./Public/Images/icon.png" type="image/png">
     <style>
         .state-address {
@@ -157,9 +159,40 @@
             }
         }
     </style>
+
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script>
+        window.googletag = window.googletag || {cmd: []};
+        googletag.cmd.push(function() {
+            var mapping = googletag.sizeMapping()
+                .addSize([1024, 0], [[728, 90]])   // PC端宽度 >=1024 使用 728x90
+                .addSize([0, 0], [[300, 250]])     // 移动端 使用 300x250
+                .build();
+
+            googletag.defineSlot('/23284785848/house_list/list_auto', ['fluid'], 'div-gpt-ad-1752564585475-0').addService(googletag.pubads());
+
+            googletag.defineSlot('/23284785848/house_list/list_adv1', [[300, 250], 'fluid', [728, 90]], 'div-gpt-ad-1752563642109-0')
+                .defineSizeMapping(mapping)
+                .addService(googletag.pubads());
+
+            googletag.defineSlot('/23284785848/house_list/list_adv2', [[300, 250], 'fluid'], 'div-gpt-ad-1752564918185-0')
+                .addService(googletag.pubads());
+
+            googletag.defineSlot('/23284785848/house_list/list_adv3', [300, 600], 'div-gpt-ad-1752566092488-0').addService(googletag.pubads());
+
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
 </head>
 
 <body style="display: none">
+<!-- /23284785848/house_list/list_auto -->
+<div id='div-gpt-ad-1752564585475-0'>
+    <script>
+        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752564585475-0'); });
+    </script>
+</div>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <defs>
         <symbol id="icon-add" viewBox="0 0 1024 1024">
@@ -405,191 +438,6 @@
 <footer id = "footer">
 </footer>
 
-<script>
-    var isSupportWebp = !![].map && document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
-
-    var viewHeight = document.documentElement.clientHeight;
-
-    function lazyload() {
-        var eles = document.querySelectorAll('img[lazyload]');
-
-        Array.prototype.forEach.call(eles, function (item, index) {
-            var rect;
-            //console.log(window.getComputedStyle(item, null).display)
-
-            if (item.dataset.src === '' || window.getComputedStyle(item, null).display == 'none') {
-                return;
-            }
-            rect = item.getBoundingClientRect();
-            if (rect.bottom >= 0 && rect.top < viewHeight) {
-                !function () {
-                    var img = new Image();
-
-                    if (document.body.clientWidth <= 425) {
-                        if (isSupportWebp == true && item.dataset.webpsmallsrc) {
-                            //console.log(item.dataset.webpsmallsrc);
-                            img.src = item.dataset.webpsmallsrc;
-                        } else if (isSupportWebp == true && !item.dataset.webpsmallsrc) {
-                            img.src = item.dataset.webpsrc;
-                        } else if (isSupportWebp == false && item.dataset.webpsmallsrc) {
-                            img.src = item.dataset.smallsrc;
-                        } else {
-                            img.src = item.dataset.src;
-                        }
-                    } else {
-                        if (isSupportWebp == true) {
-                            img.src = item.dataset.webpsrc;
-                        } else {
-                            img.src = item.dataset.src;
-                        }
-                    }
-
-                    img.onload = function () {
-                        item.src = img.src;
-                    }
-                    item.removeAttribute('data-webpsrc');
-                    item.removeAttribute('data-webpsmallsrc');
-                    item.removeAttribute('data-src');
-                    item.removeAttribute('data-smallsrc');
-                    item.removeAttribute('lazyload');
-                }();
-            }
-        })
-    }
-
-    lazyload();
-    document.addEventListener('scroll', lazyload);
-
-</script>
-<script>
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted || (window.performance && window.performance.getEntriesByType && String(window.performance.getEntriesByType('navigation')[0].type) === 'back_forward')) {
-            location.reload();
-        }
-    });
-    function getCookie(name) {
-        var strCookie = document.cookie;
-        var arrCookie = strCookie.split("; ");
-        for (var i = 0; i < arrCookie.length; i++) {
-            var arr = arrCookie[i].split("=");
-            if (arr[0] == name) return arr[1];
-        }
-        return "";
-    }
-    window.onload = function () {
-        let shade = document.querySelector(".shade")
-        var bt = document.getElementById("hd-menu-btn");
-        var btclose = document.getElementById("btclose");
-
-        bt.onclick = function () {
-            shade.style.display = "block";
-        }
-        btclose.onclick = function () {
-            shade.style.display = "none";
-        }
-        $("#backdrop").click(function () {
-            $(this).hide()
-        });
-        if (getCookie('order') == "up") {
-            $(".icon-filter").addClass("filter-toggle")
-        } else {
-            $(".icon-filter").removeClass("filter-toggle")
-        }
-        $(".filter").click(function () {
-            // //console.log(getCookie('order'))
-            var url = window.location.protocol + "//" + window.location.host + "" + window.location.pathname;
-            //console.log(url)
-            if (getCookie('order') == "up") {
-                window.location.href = url + "?sort=down"
-            } else {
-                window.location.href = url + "?sort=up"
-            }
-        });
-    };
-</script>
-<script>
-    jQuery(document).ready(function () {
-        updateClassAndTableName()
-        $(".like").click(function () {
-            //login to use save function
-            if (localStorage.userInfo !== undefined) {
-                //if has remove class, localStorage remove an item, class turn to like
-                if ($(this).hasClass("remove")) {
-                    $(this).removeClass("remove");
-                }
-                // if don't have remove class, like class add remove class, get infomation and create a new table row, save it to localStorage
-                else {
-                    $(this).addClass("remove");
-                    $(".if_none").hide()
-                    var eleTop = $(this).offset().top - $(document).scrollTop();
-                    var eleLeft = $(this).offset().left;
-                    var likeTop = $(".shortListButton").offset().top - $(document).scrollTop();
-                    var likeLeft = $(".shortListButton").offset().left;
-                    tranlateY = likeTop - eleTop + 10;
-                    tranlateX = likeLeft - eleLeft + 10;
-                    var eleFly = $(this).children(".add-fly");
-                    var eleFlyItem = eleFly.children(".add-fly-item");
-                    eleFly.css("visibility", "visible")
-                    eleFly.css("transform", "translateX(" + tranlateX + "px)");
-                    eleFlyItem.css("transform", "translateY(" + tranlateY + "px)");
-                    // $(".icon-cacl").css("transform", "scale(1.2)");
-                    setTimeout(function () {
-                        eleFly.css({ "visibility": "hidden", "transform": "translateX(" + 0 + "px)" });
-                        eleFlyItem.css("transform", "translateY(" + 0 + "px)");
-                    }, 290);
-                }
-                var txt = $(this).parents(".imgli-box").siblings(".statetitle").text();
-                var href = $(this).parents(".imgli-box").siblings("a").attr("href");
-                refresh(txt, href);
-                updateClassAndTableName();
-                //console.log("update for click like")
-            } else {
-                $("#login").css('display', 'block')
-            }
-        });
-        function updateClassAndTableName() {
-            var clinicMark = localStorage.getItem('clinicMark');
-            // //console.log(clinicMark, "Load saved items from localStorage")
-            if (clinicMark) {
-                var items = JSON.parse(clinicMark);
-                $(".total").text(items.length);
-                //add remove class
-                $(".statelists-link .statetitle").each(function () {
-                    var href = $(this).siblings("a").attr("href");
-                    var name = $(this).text();
-                    // Check if the name exists in the items array
-                    var exists = items.some(function (item) {
-                        return item.txt === name && item.href === href;
-                    });
-                    if (exists) {
-                        $(this).siblings(".imgli-box").find(".like").addClass("remove");
-                    }
-                });
-            }
-        }
-        function refresh(txt, href) {
-            var existingItems = localStorage.getItem("clinicMark")
-                ? JSON.parse(localStorage.getItem("clinicMark"))
-                : [];
-            // //console.log(existingItems);
-            var index = existingItems.findIndex(item => item.txt === txt && item.href === href)
-            if (index !== -1) {
-                // Item already exists, remove it
-                existingItems.splice(index, 1);
-                //console.log("Item already exists, remove it", existingItems)
-            } else {
-                // Item does not exist, add it
-                existingItems.push({ txt: txt, href: href });
-                //console.log("Item does not exist, add it", existingItems)
-            }
-            localStorage.setItem("clinicMark", JSON.stringify(existingItems));
-
-        }
-    })
-
-
-</script>
-
 
 <script>
     // 加载 header
@@ -713,13 +561,7 @@
 
                     if (cachedAdsSet.has(el)) return;
 
-                    loadListAdv_Test(el, (finishedEl) => {
-                        // if (!cachedAdsSet.has(finishedEl)) {
-                        //     //adsFinalHTMLCache.push(finishedEl.outerHTML);
-                        //     //cachedAdsSet.add(finishedEl);
-                        //     //console.log("✅ 广告已缓存，当前缓存长度:", adsFinalHTMLCache.length);
-                        // }
-                    });
+                    loadList_adv4(el);
 
                     adObserver.unobserve(el);
                 }
@@ -923,8 +765,9 @@
                 const observer = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            loadListAdv_Test(entry.target);
+                            loadList_adv2(entry.target);
                             obs.unobserve(entry.target);
+                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752564918185-0'); });
                         }
                     });
                 }, {
@@ -1013,8 +856,9 @@
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        loadListAdv_Test(entry.target);
+                        loadList_adv1(entry.target);
                         obs.unobserve(entry.target);
+                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752563642109-0'); });
                     }
                 });
             }, {
@@ -1022,18 +866,75 @@
             });
             observer.observe(list_adv1);
         }
+
+        const RightBottom_adbox = document.getElementById('RightBottom_adbox')
+        if (list_adv1) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        loadList_adv3(entry.target);
+                        obs.unobserve(entry.target);
+                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752566092488-0'); });
+                    }
+                });
+            }, {
+                rootMargin: '5px',
+            });
+            observer.observe(RightBottom_adbox);
+        }
     })
 </script>
 
 <script>
-    function loadListAdv_Test(el, onFinish) {
+    function loadListAdv_Test(el) {
         // 模拟广告异步加载
         setTimeout(() => {
             el.innerHTML = `<div class="adv-box" style="">${returnAdvTestWord()}</div>`;
-            if (typeof onFinish === 'function') {
-                onFinish(el);
-            }
         }, 300);
+    }
+
+    function loadList_adv1(el){
+        el.innerHTML = returnList_adv1();
+    }
+
+    function loadList_adv2(el){
+        el.innerHTML = returnList_adv2();
+    }
+
+    function loadList_adv3(el){
+        el.innerHTML = returnList_adv3();
+    }
+
+    function loadList_adv4(el) {
+        // 已加载就跳过
+        if (el.dataset.loaded === '1') return;
+
+        // 清空旧内容（确保广告位置干净）
+        el.innerHTML = '';
+
+        // 生成唯一 ID
+        const uniqueId = `div-gpt-advtestAdv_2-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        el.id = uniqueId;
+
+        // 标记已加载
+        el.dataset.loaded = '1';
+
+        // 定义广告并展示
+        googletag.cmd.push(function () {
+
+            var mapping = googletag.sizeMapping()
+                .addSize([1024, 0], [[728, 90]])      // PC端视口宽度 >= 1024，使用 728x90
+                .addSize([0, 0], [[300, 250]])        // 移动端（默认），使用 300x250
+                .build();
+
+            // googletag.defineSlot('/23284785848/mqqht/loadTestAdv_2', ['fluid'], uniqueId)
+            //     .addService(googletag.pubads());
+            googletag.defineSlot('/23284785848/house_list/list_adv4', ['fluid'], uniqueId)
+                .defineSizeMapping(mapping).addService(googletag.pubads());
+
+
+            googletag.display(uniqueId);
+        });
     }
 </script>
 

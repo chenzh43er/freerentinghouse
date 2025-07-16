@@ -1,129 +1,55 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>彩色社交分享按钮</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="icon" href="./Public/Images/icon.png" type="image/png">
+  <title>Fluid 广告 - 固定高度 100px</title>
   <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-      background-color: #f9f9f9;
-    }
-
-    .share-title {
-      text-align: center;
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
-
-    .social-share {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .social-btn {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+    /* 模拟广告内容固定高度 */
+    .ad-content {
+      height: 100px;
+      background-color: #e0e0e0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      color: white;
-      text-decoration: none;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .social-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    /* Platform-specific colors */
-    .facebook   { background-color: #3b5998; }
-    .instagram  { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
-    .twitter    { background-color: #1da1f2; }
-    .youtube    { background-color: #ff0000; }
-    .whatsapp   { background-color: #25d366; }
-    .pinterest  { background-color: #bd081c; }
-    .snapchat   { background-color: #fffc00; color: black; }
-    .messenger  { background-color: #0084ff; }
-
-    @media (max-width: 600px) {
-      .social-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 20px;
-      }
+      font-family: sans-serif;
+      font-size: 16px;
+      color: #333;
+      border: 1px dashed #aaa;
     }
   </style>
-  <script src="./Public/Js/common.js"></script>
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+  <script>
+    window.googletag = window.googletag || {cmd: []};
+
+    googletag.cmd.push(function() {
+      googletag.defineSlot('/6355419/Travel/Europe/France/Paris', 'fluid', 'div-gpt-ad-123')
+              .addService(googletag.pubads());
+      googletag.enableServices();
+    });
+  </script>
 </head>
 <body>
 
-<div class="share-title">分享到社交平台</div>
+<h2>Fluid 广告容器（目标高度 100px）</h2>
 
-<div class="social-share">
-  <a class="social-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://example.com" title="Facebook" target="_blank">
-    <i class="fab fa-facebook-f"></i>
-  </a>
-  <a class="social-btn instagram" href="https://www.instagram.com" title="Instagram" target="_blank">
-    <i class="fab fa-instagram"></i>
-  </a>
-  <a class="social-btn twitter" href="https://twitter.com/intent/tweet?url=https://example.com" title="Twitter" target="_blank">
-    <i class="fab fa-twitter"></i>
-  </a>
-  <a class="social-btn youtube" href="https://www.youtube.com" title="YouTube" target="_blank">
-    <i class="fab fa-youtube"></i>
-  </a>
-  <a class="social-btn whatsapp" href="https://api.whatsapp.com/send?text=https://example.com" title="WhatsApp" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-  <a class="social-btn pinterest" href="https://pinterest.com/pin/create/button/?url=https://example.com" title="Pinterest" target="_blank">
-    <i class="fab fa-pinterest-p"></i>
-  </a>
-  <a class="social-btn snapchat" href="https://www.snapchat.com" title="Snapchat" target="_blank">
-    <i class="fab fa-snapchat-ghost"></i>
-  </a>
-  <a class="social-btn messenger" href="https://www.messenger.com/t/?link=https://example.com" title="Messenger" target="_blank">
-    <i class="fab fa-facebook-messenger"></i>
-  </a>
-</div>
 
-<div class="button-div" onclick="handleClick()">
-  点击这里
-</div>
 
+<!-- 广告容器 -->
+<div id="div-gpt-ad-123" style="width: 100%;"></div>
+
+<!-- 模拟广告内容插入（真实情况由 GAM 创意填充） -->
 <script>
-  function handleClick() {
-    alert("按钮被点击！");
-  }
+  googletag.cmd.push(function() {
+    googletag.display('div-gpt-ad-123');
+  });
+
+  // ⚠️ 模拟广告内容填充（用于测试，真实环境由 GAM 系统返回广告内容）
+  // 模拟的广告内容：高度固定为 100px
+  const mockAd = document.createElement('div');
+  mockAd.className = 'ad-content';
+  mockAd.innerText = '这是一个模拟的 fluid 测试广告，高度为 100px';
+  document.getElementById('div-gpt-ad-123').appendChild(mockAd);
 </script>
-
-<style>
-  .button-div {
-    background-color: #f5b609;  /* 背景色 */
-    color: white;               /* 字体颜色 */
-    padding: 12px 20px;         /* 内边距 */
-    text-align: center;         /* 居中文本 */
-    border-radius: 8px;         /* 圆角 */
-    cursor: pointer;            /* 鼠标指针变为手型 */
-    font-size: 16px;            /* 字体大小 */
-    font-weight: bold;          /* 字体加粗 */
-    user-select: none;          /* 禁止选中文本 */
-    transition: background-color 0.3s;
-  }
-
-  .button-div:hover {
-    background-color: #e0a800; /* 悬浮时稍微变深 */
-  }
-</style>
-
 
 </body>
 </html>
