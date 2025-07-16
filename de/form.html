@@ -570,7 +570,7 @@
     $(document).ready(function () {
         document.getElementById("form_adv1").innerHTML = returnAdvWord()
         document.getElementById("form_adv2").innerHTML = returnAdvWord()
-        document.getElementById("RightBottom_adbox").innerHTML = returnAdvWord()
+
 
         const form_adv1 = document.getElementById('form_adv1')
         if (form_adv1) {
@@ -604,21 +604,25 @@
             observer.observe(form_adv2);
         }
 
-        const RightBottom_adbox = document.getElementById('RightBottom_adbox')
-        if (RightBottom_adbox) {
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        loadForm_adv4(entry.target);
-                        obs.unobserve(entry.target);
-                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752654602082-0'); });
-                    }
+        if(!isMobile()){
+            document.getElementById("RightBottom_adbox").innerHTML = returnAdvWord()
+            const RightBottom_adbox = document.getElementById('RightBottom_adbox')
+            if (RightBottom_adbox) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            loadForm_adv4(entry.target);
+                            obs.unobserve(entry.target);
+                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752654602082-0'); });
+                        }
+                    });
+                }, {
+                    rootMargin: '5px',
                 });
-            }, {
-                rootMargin: '5px',
-            });
-            observer.observe(RightBottom_adbox);
+                observer.observe(RightBottom_adbox);
+            }
         }
+
 
         //titleReturn
         document.title = `${returnWebStr()} Form Submit.`;
