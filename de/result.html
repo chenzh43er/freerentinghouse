@@ -15,6 +15,14 @@
     <script src="./Public/Js/googleAdv.js"></script>
     <link rel="icon" href="./Public/Images/icon.png" type="image/png">
     <style>
+        .adswp{
+            text-align: center;
+        }
+
+        .statelists-imgli{
+            text-align: center;
+        }
+
         .success-wrap {
             display: flex;
             justify-content: center;
@@ -582,6 +590,18 @@
 
     function loadResult_adv4(el){
         el.innerHTML = returnResult_adv4();
+    }
+
+    function returnToList(){
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        let display_state = urlParams.get('state');
+        let display_city = urlParams.get('city');
+        let display_district = urlParams.get('district');
+
+
+        window.location.href = `./list.html?state=${display_state}&city=${display_city}&district=${display_district}`;
     }
 </script>
 
