@@ -68,6 +68,9 @@
 
             googletag.defineSlot('/23284785848/house_form/form_adv3', [[300, 250], 'fluid'], 'div-gpt-ad-1752648099641-0').addService(googletag.pubads());
 
+            googletag.defineSlot('/23284785848/house_form/form_adv4', [[300, 250], 'fluid'], 'div-gpt-ad-1753026316618-0').addService(googletag.pubads());
+
+            googletag.defineSlot('/23284785848/house_form/form_adv5', ['fluid', [300, 250]], 'div-gpt-ad-1753026438231-0').addService(googletag.pubads());
 
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
@@ -288,7 +291,7 @@
         </div>
 
         <div class="contact-form"
-             style="max-width: 600px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+             style="max-width: 728px; margin:auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
             <form>
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label for="name" style="display: block; margin-bottom: 8px; font-weight: bold;" id="lang_name">name：</label>
@@ -319,7 +322,7 @@
             Advertise
         </div>
 
-        <div style="max-width: 600px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <div style="max-width: 728px; margin:auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
             <ul class="suggestHouseUl" id = "under_list">
             </ul>
         </div>
@@ -488,7 +491,7 @@
             display_state = 'Berlin'; // 或你希望的默认值
         }
 
-        const { data, error } = await fetchRandomHousesByState(display_state,6);
+        const { data, error } = await fetchRandomHousesByState(display_state,5);
 
         if (error) {
             console.error("获取房源数据失败：", error.message);
@@ -498,7 +501,7 @@
         $(document).ready(function () {
             let html = ``;
 
-            data.forEach(house => {
+            data.forEach((house,index) => {
                 const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + house.mainpic + "/";
                 const picsObj = JSON.parse(house.pics_jsonStr || "[]");
 
@@ -514,9 +517,29 @@
                       <h5 class="most-tit">${house.price} Kaltmiete zzgl. NK</h5>
                     </div>
                   </li>`;
+
+                if(index == 0){
+                    html += `<li><div id = "under_listAdv"></div></li>`
+                }
             });
 
             document.getElementById("under_list").innerHTML = html;
+
+            const under_listAdv = document.getElementById('under_listAdv')
+            if (under_listAdv) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            loadForm_adv1(entry.target);
+                            obs.unobserve(entry.target);
+                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1753026438231-0'); });
+                        }
+                    });
+                }, {
+                    rootMargin: '5px',
+                });
+                observer.observe(under_listAdv);
+            }
         });
     }
 
@@ -617,7 +640,7 @@
                         if (entry.isIntersecting) {
                             loadForm_adv4(entry.target);
                             obs.unobserve(entry.target);
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752654602082-0'); });
+                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1753026316618-0'); });
                         }
                     });
                 }, {
@@ -657,6 +680,11 @@
     function loadForm_adv4(el) {
         // 插入 <ins> HTML
         el.innerHTML = returnForm_adv4();
+    }
+
+    function loadForm_adv5(el) {
+        // 插入 <ins> HTML
+        el.innerHTML = returnForm_adv5();
     }
 </script>
 

@@ -11,6 +11,7 @@
   <link type="text/css" rel="stylesheet" href="./Public/Css/lch-office.css">
   <script src="./Public/Js/utlParam.js"></script>
   <script src="./Public/Js/common.js"></script>
+  <script src="./Public/Js/googleAdv.js"></script>
   <link rel="icon" href="./Public/Images/icon.png" type="image/png">
   <style>
     .select-state {
@@ -34,19 +35,54 @@
         grid-template-columns: 1fr;
       }
     }
-
-
   </style>
+
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+  <script>
+    window.googletag = window.googletag || {cmd: []};
+    googletag.cmd.push(function() {
+      var mapping = googletag.sizeMapping()
+              .addSize([1024, 0], [[728, 90]])   // PC端宽度 >=1024 使用 728x90
+              .addSize([0, 0], [[300, 250]])     // 移动端 使用 300x250
+              .build();
+
+      googletag.defineSlot('/23284785848/house_post/post_auto', ['fluid'], 'div-gpt-ad-1752990334430-0').addService(googletag.pubads());
+
+      googletag.defineSlot('/23284785848/house_post/post_adv1', ['fluid', [300, 250]], 'div-gpt-ad-1752990906258-0').addService(googletag.pubads());
+
+      googletag.defineSlot('/23284785848/house_post/post_adv2', [[300, 250], 'fluid', [728, 90]], 'div-gpt-ad-1752991223651-0')
+              .defineSizeMapping(mapping)
+              .addService(googletag.pubads());
+
+      googletag.defineSlot('/23284785848/house_post/post_adv3', [[300, 250], [728, 90], 'fluid'], 'div-gpt-ad-1752992035234-0')
+              .defineSizeMapping(mapping)
+              .addService(googletag.pubads());
+
+      googletag.pubads().enableSingleRequest();
+      googletag.enableServices();
+    });
+  </script>
+
+
 </head>
 
 <body aria-hidden="false">
+
+<!-- /23284785848/house_post/post_auto -->
+<div id='div-gpt-ad-1752990334430-0'>
+  <script>
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752990334430-0'); });
+  </script>
+</div>
 
 <header data-eusoft-scrollable-element="1" id = "header">
 </header>
 
 <main class="wrapper contents no-sidebar"
       style="margin-bottom: 30px; height: auto !important; min-height: 0px !important;">
-  <div class="detail-left" style="height: auto !important;" data-eusoft-scrollable-element="1" id = "postPage">
+  <div class="detail-left" style="height: auto !important;" data-eusoft-scrollable-element="1" >
+    <div id = "postPage"></div>
+    <div id = "bottom_div"></div>
   </div>
 
   <div class="detail-rightside" id = "asidePage">
@@ -58,172 +94,6 @@
 </footer>
 
 <script src="./Public/Js/jquery-3.0.0.min.js"></script>
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-  var loginStatus = false
-  $(".google-img-wrap").click(function () {
-    if (localStorage.userInfo !== undefined) {
-      $(".sign-out-btn").css('display', 'block')
-    } else if (!loginStatus) {
-      $("#login").css('display', 'block')
-    } else {
-      return
-    }
-  })
-
-  $(".sign-out-btn").click(function () {
-    $(".sign-out-btn").css('display', 'none')
-  })
-  $('.signlater').click(function () {
-    $('#login').hide()
-  });
-  $('.icon-close').click(function () {
-    $('#login').hide()
-  });
-
-
-  function updateTable() {
-    var clinicMark = localStorage.getItem('clinicMark');
-    if (clinicMark) {
-      var items = JSON.parse(clinicMark);
-      $(".total").text(items.length);
-      if (items.length > 1) {
-        $(".option").text('options');
-      } else {
-        $(".option").text('option');
-      }
-      $(".favourites_added tbody").empty();
-      items.forEach(function (item) {
-        var str = '<tr class=\"show\">';
-        str += '<td><a href="' + item.href + '">' + item.txt + '</a></td>';
-        str += '<td><img src=\"/Public/Images/delet.png\" class=\"delet\" alt=\"delet\"></td>';
-        str += '</tr>';
-        $(".favourites_added tbody").append(str);
-        //console.log("footer: add to the table")
-      });
-    }
-  }
-  function updateTableName() {
-    var clinicMark = localStorage.getItem('clinicMark');
-    if (clinicMark) {
-      var items = JSON.parse(clinicMark);
-      $(".total").text(items.length);
-
-    }
-    //console.log("update table name")
-  }
-
-  $(".shortListButton").click(function (event) {
-    updateTable();
-    event.stopPropagation()
-    $(".wishBar").toggleClass("expanded")
-    $(".wishBarCover").css("width", "100%")
-  })
-
-  $("body").click(function () {
-    $(".wishBar").removeClass("expanded");
-    $(".wishBarCover").css("width", "0");
-  });
-  $(".icon_game").click(function () {
-    $(".wishBar").removeClass("expanded");
-    $(".wishBarCover").css("width", "0");
-  });
-
-  $(".wishBar").click(function (event) {
-    event.stopPropagation();
-  });
-
-  $(".favourites_added").on('click', '.delet', function () {
-    var txt = $(this).parent().siblings().find('a').text();
-    var href = $(this).parent().siblings().find('a').attr("href");
-    var clinicMark = localStorage.getItem('clinicMark');
-    if (clinicMark) {
-      var items = JSON.parse(clinicMark);
-      var index = items.findIndex(function (item) {
-        return (item.txt === txt && item.href === href);
-      });
-      if (index !== -1) {
-        items.splice(index, 1);
-      }
-      localStorage.setItem('clinicMark', JSON.stringify(items));
-      $('.like').each(function () {
-        if ($(".title").length > 0) {
-          var txt2 = $(".title").text();
-          var href2 = window.location.pathname;
-        }
-        if ($(".imgli-box").length > 0) {
-          var txt2 = $(this).parents(".imgli-box").siblings(".statetitle").text();
-          var href2 = $(this).parents(".imgli-box").siblings("a").attr("href");
-        }
-        if ($(".statelistwl-right").length > 0) {
-          var txt2 = $(this).parents(".statelistwl-right").siblings(".statelistwl-left").find(".statetit-wl").text();
-          var href2 = $(this).parents(".statelistwl-right").siblings("a").attr("href");
-        }
-        if (txt2 === txt && href2 === href) {
-          $(this).removeClass('remove');
-          //console.log("footer: remove class .remove")
-        }
-      })
-      updateTable();
-      $(".total").text(items.length);
-    }
-  });
-
-  jQuery(document).ready(function () {
-    var Mark = '';
-    if (localStorage.clinicMark) {
-      Mark = localStorage.getItem("clinicMark");
-      var clinicMark = localStorage.getItem("clinicMark");
-      var items = JSON.parse(clinicMark)
-      $(".total").text(items.length);
-
-      var arrItems = arr.length;
-      //console.log(arrItems)
-      if (numItems > 1) {
-        $(".option").text('options');
-      } else {
-        $(".option").text('option');
-      }
-
-      $(arr).each(function (i, item) {
-        var href1 = localStorage.getItem(arr[i]);
-        str1 = '<tr class=\"show\">';
-        str1 += '<td><a href="' + href1 + '">' + arr[i] + '</a></td>';
-        str1 += '<td><img src=\"/Public/Images/delet.png\" class=\"delet\" alt=\"delet\"></td>';
-        str1 += '</tr>';
-        $(".favourites_added tbody").append(str1);
-        var arrin = arr[i];
-        $(".statetitle").each(function (i, item) {
-          if ($(this).text() == arrin) {
-            //console.log($(this).text())
-            $(this).siblings(".most-bottom").find(".like").addClass("remove")
-            $(this).siblings(".imgli-box").find(".like").addClass("remove")
-            $(this).siblings(".more").find(".like").addClass("remove")
-          }
-        })
-        $(".statetit-wl").each(function (i, item) {
-          if ($(this).text() == arrin) {
-            $(this).parents(".statelistwl-left").siblings(".statelistwl-right").find(".like").addClass("remove")
-          }
-        })
-        $("#office-tl").each(function (i, item) {
-          if ($(this).text() == arrin) {
-            $(".like").addClass("remove")
-          }
-        })
-        $(".title").each(function (i, item) {
-          if ($(this).text() == arrin) {
-            $(".like").addClass("remove")
-          }
-        })
-      });
-    } else {
-      $(".if_none").show()
-    }
-  })
-
-</script>
-
 
 <script>
   // 加载 header
@@ -267,8 +137,9 @@
               const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                   if (entry.isIntersecting) {
-                    loadListAdv_Test(entry.target);
+                    loadPost_adv1(entry.target);
                     obs.unobserve(entry.target);
+                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752990906258-0'); });
                   }
                 });
               }, {
@@ -276,7 +147,35 @@
               });
               observer.observe(aside_adv);
             }
+
+            const adv3 = document.getElementById('adv3')
+            if (adv3) {
+              const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                    loadPost_adv3(entry.target);
+                    obs.unobserve(entry.target);
+                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752992035234-0'); });
+                  }
+                });
+              }, {
+                rootMargin: '5px',
+              });
+              observer.observe(adv3);
+            }
           });
+
+  function loadPost_adv1(el){
+    el.innerHTML = returnPost_adv1();
+  }
+
+  function loadPost_adv2(el){
+    el.innerHTML = returnPost_adv2();
+  }
+
+  function loadPost_adv3(el){
+    el.innerHTML = returnPost_adv3();
+  }
 
   function loadScript(src, callback) {
     let script = document.createElement("script");
@@ -294,6 +193,22 @@
     };
 
     document.head.appendChild(script); // 插入到 `head` 中
+
+    const bottom_div = document.getElementById('bottom_div')
+    if (bottom_div) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadPost_adv2(entry.target);
+            obs.unobserve(entry.target);
+            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752991223651-0'); });
+          }
+        });
+      }, {
+        rootMargin: '5px',
+      });
+      observer.observe(bottom_div);
+    }
   }
 
   $(document).ready(function () {
