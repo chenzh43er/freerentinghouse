@@ -63,6 +63,7 @@
                 .defineSizeMapping(mapping)
                 .addService(googletag.pubads());
 
+            googletag.defineSlot('/23284785848/teach/teach_adv3', ['fluid', [300, 250]], 'div-gpt-ad-1753259195340-0').addService(googletag.pubads());
 
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
@@ -853,7 +854,7 @@
                 const observer = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            loadTeach_adv2(entry.target);
+                            loadTeach_adv3(entry.target);
                             obs.unobserve(entry.target);
                         }
                     });
@@ -966,7 +967,7 @@
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        loadTeach_adv(entry.target);
+                        loadTeach_adv2(entry.target);
                         obs.unobserve(entry.target);
                     }
                 });
@@ -995,6 +996,14 @@
         el.innerHTML = returnTeach_adv2();
         googletag.cmd.push(function() {
             googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752822337408-0'); });
+        });
+    }
+
+    function loadTeach_adv3(el) {
+        // 插入 <ins> HTML
+        el.innerHTML = returnTeach_adv3();
+        googletag.cmd.push(function() {
+            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1753259195340-0'); });
         });
     }
 </script>

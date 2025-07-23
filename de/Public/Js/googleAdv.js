@@ -14,13 +14,25 @@ function returnTestDiv(){
 
 function returnIndex_adv1(){
     return `<!-- /23284785848/house_index/house_index1 -->
-<div id='div-gpt-ad-1752434042868-0' style='min-width: 300px; min-height: 250px;'>
+<div id='div-gpt-ad-1752434042868-0' style='min-width: 300px;'>
 </div>`
 }
 
 function  returnTeach_adv(){
     return `<!-- /23284785848/teach/teach_adv1 -->
-<div id='div-gpt-ad-1752473662406-0' style='min-width: 300px; min-height: 90px;'>
+<div id='div-gpt-ad-1752473662406-0'>
+</div>`
+}
+
+function  returnTeach_adv2(){
+    return `<!-- /23284785848/teach/teach_adv1 -->
+<div id='div-gpt-ad-1752822337408-0' style='min-width: 300px; min-height: 90px;'>
+</div>`
+}
+
+function returnTeach_adv3(){
+    return `<!-- /23284785848/teach/teach_adv3 -->
+<div id='div-gpt-ad-1753259195340-0' style='min-width: 300px; min-height: 250px;'>
 </div>`
 }
 
@@ -103,6 +115,12 @@ function returnDetail_adv4(){
 </div>`
 }
 
+function returnDetail_adv5(){
+    return `<!-- /23284785848/house_detail/detail_adv5 -->
+<div id='div-gpt-ad-1752994696303-0' style='min-width: 300px; min-height: 250px;'>
+</div>`
+}
+
 function returnForm_adv1(){
     return `<!-- /23284785848/house_form/form_adv1 -->
 <div id='div-gpt-ad-1752646491772-0' style='min-width: 300px; min-height: 90px;'>
@@ -123,7 +141,13 @@ function returnForm_adv3(){
 
 function returnForm_adv4(){
     return `<!-- /23284785848/house_form/form_adv4 -->
-<div id='div-gpt-ad-1752654602082-0' style='min-width: 300px; min-height: 250px;'>
+<div id='div-gpt-ad-1753026316618-0' style='min-width: 300px;'>
+</div>`
+}
+
+function returnForm_adv5(){
+    return `<!-- /23284785848/house_form/form_adv5 -->
+<div id='div-gpt-ad-1753026438231-0' style='min-width: 300px; min-height: 250px;'>
 </div>`
 }
 
@@ -149,5 +173,29 @@ function returnResult_adv3(){
 function returnResult_adv4(){
     return `<!-- /23284785848/house_result/result_adv4 -->
 <div id='div-gpt-ad-1752655475092-0' style='min-width: 300px; min-height: 600px;'>
+</div>`
+}
+
+function returnResult_adv5(){
+    return `<!-- /23284785848/house_result/result_adv5 -->
+<div id='div-gpt-ad-1753026869757-0' style='min-width: 300px; min-height: 250px;'>
+</div>`
+}
+
+function returnPost_adv1(){
+    return `<!-- /23284785848/house_post/post_adv1 -->
+<div id='div-gpt-ad-1752990906258-0' style='min-width: 300px; min-height: 250px;'>
+</div>`
+}
+
+function returnPost_adv2(){
+    return `<!-- /23284785848/house_post/post_adv2 -->
+<div id='div-gpt-ad-1752991223651-0'>
+</div>`
+}
+
+function returnPost_adv3(){
+    return `<!-- /23284785848/house_post/post_adv3 -->
+<div id='div-gpt-ad-1752992035234-0'>
 </div>`
 }

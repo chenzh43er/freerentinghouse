@@ -4,6 +4,7 @@ const post = {
   <p>Section-8-Programme, auch bekannt als Housing Choice Voucher Programme, bieten einkommensschwachen Familien oder Einzelpersonen Mietzuschüsse. Es gibt vier grundlegende Arten von Section-8-Programmen:</p>
 
   <h4>1. Mietergestützter Housing Choice Voucher (HCV)</h4>
+  <div id="adv3"></div>
   <p>Der mietergestützte Housing Choice Voucher (HCV) ist ein vom Bund finanziertes Mietunterstützungsprogramm. Das Programm ermöglicht es berechtigten Familien, einen Gutschein zu erhalten, mit dem sie einen Teil ihrer Miete an einen privaten Vermieter zahlen können. Die Höhe des Gutscheins wird basierend auf dem Einkommen der Familie und den lokalen Mietpreisen festgelegt.</p>
 
   <img class="old_img" alt="4 grundlegende Arten von Section-8-Programmen, die Sie kennen sollten_1" src="./Public/Images/postImg/4-basic-types-of-section-8-programs-you-need-to-know_1.webp">
@@ -18,6 +19,7 @@ const post = {
   <img class="old_img" alt="Wie kann ich mich online für Section 8 bewerben und die Voraussetzungen erfüllen_1" src="./Public/Images/postImg/how-can-i-apply-for-section-8-online-and-qualify-for-it_1.webp">
 
   <h4>1. Was ist Section 8?</h4>
+  <div id="adv3"></div>
   <p>Section 8 ist ein vom US-Wohnungsministerium (HUD) geschaffenes Programm für staatlich geförderten Wohnraum. Es soll einkommensschwache Familien, Menschen mit Behinderung und ältere Menschen dabei unterstützen, ein sicheres und sauberes Zuhause im privaten Wohnungsmarkt zu finden. Wenn Sie als berechtigt eingestuft werden, erhalten Sie einen sogenannten Housing Choice Voucher (HCV) von Ihrer örtlichen Wohnungsbehörde (PHA).</p>
 
   <h4>2. 4 Schritte zur Online-Bewerbung für Section 8</h4>
@@ -42,6 +44,7 @@ const post = {
 
     "10002":`<div class="article" style="height: auto !important;">
   <h1>HUD-Unterstützung übernimmt Ihre Mietkosten</h1>
+  <div id="adv3"></div>
   <p>Die HUD-Unterstützung bezieht sich auf Ressourcen und Programme, die vom US-amerikanischen Ministerium für Wohnungswesen und Stadtentwicklung (HUD) angeboten werden, um einkommensschwachen Einzelpersonen und Familien dabei zu helfen, sicheren und bezahlbaren Wohnraum zu finden.</p>
   <img class="old_img" alt="HUD-Unterstützung übernimmt Ihre Mietkosten_1" src="./Public/Images/postImg/hud-assistance-pays-for-your-rental-costs_1.webp">
 </div>
