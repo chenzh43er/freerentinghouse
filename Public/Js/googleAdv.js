@@ -20,7 +20,19 @@ function returnIndex_adv1(){
 
 function  returnTeach_adv(){
     return `<!-- /23284785848/teach/teach_adv1 -->
-<div id='div-gpt-ad-1752473662406-0' style='min-width: 300px; min-height: 90px;'>
+<div id='div-gpt-ad-1752473662406-0'>
+</div>`
+}
+
+function  returnTeach_adv2(){
+    return `<!-- /23284785848/teach/teach_adv1 -->
+<div id='div-gpt-ad-1752822337408-0' style='min-width: 300px; min-height: 90px;'>
+</div>`
+}
+
+function returnTeach_adv3(){
+    return `<!-- /23284785848/teach/teach_adv3 -->
+<div id='div-gpt-ad-1753259195340-0' style='min-width: 300px; min-height: 250px;'>
 </div>`
 }
 
