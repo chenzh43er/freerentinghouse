@@ -459,9 +459,12 @@
             //console.log(lang)
             if(lang == "de"){
                 document.getElementById("lang_index").innerText="Startseite"
+            }else if(lang == "us")
+            {
+                document.getElementById("lang_index").innerText="HOME"
             }else
             {
-                document.getElementById("lang_index").innerText="Startseite"
+                document.getElementById("lang_index").innerText="HOME"
             }
         });
 
@@ -480,7 +483,21 @@
 </script>
 
 <script type="module">
-    import { fetchData, countHouses } from './Public/Js/dataGet.js';
+
+    const lang = getLangFromPath()
+    let fetchDataUrl = ""
+    if(lang == "de"){
+        fetchDataUrl = "./Public/Js/dataGet.js"
+    }else if(lang == "us")
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }else
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }
+
+    import(fetchDataUrl).then(async module => {
+        const { fetchData , countHouses} = module;
 
     const params = new URLSearchParams(window.location.search);
     const display_state = params.get('state');
@@ -604,35 +621,102 @@
         let advIndex = 0;
 
         data.forEach((house, index) => {
-            const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + house.mainpic + "/";
-            const picsObj = JSON.parse(house.pics_jsonStr || "[]");
 
-            html += `
-        <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}">
-            <li class="statelists-imgli">
-                <div class="statelists-link">
-                    <div class="imgli-box">
-                        <img src="${serverPic + (picsObj[0] || '')}" alt="${house.name}" class="most-img">
-                    </div>
-                    <div class="statelists-right">
-                        <div class="statetitle">${house.name}</div>
-                        <div class="state-address">${house.location}</div>
-                        <div class="state-address">${house.ver}</div>
-                        <div class="state-address">${house.statetype}</div>
-                        <div class="state-address">
-                            <span>${house.room} Zimmer</span>
-                            <span>${house.area}</span>
-                            <span>${house.loft} Geschoss</span>
+            const lang = getLangFromPath()
+            let picURL = ""
+            if(lang == "de"){
+                picURL = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/"
+            }else if(lang == "us"){
+                picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+            }else{
+                picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+            }
+
+
+            const serverPic = picURL + house.mainpic + "/";
+            const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+            if(lang == "de") {
+                    html += `
+            <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}">
+                <li class="statelists-imgli">
+                    <div class="statelists-link">
+                        <div class="imgli-box">
+                            <img src="${serverPic + (picsObj[0] || '')}" alt="${house.name}" class="most-img">
                         </div>
-                        <div class="most-bottom">
-                            <div class="most-left">
-                                ${house.price} Kaltmiete zzgl. NK
+                        <div class="statelists-right">
+                            <div class="statetitle">${house.name}</div>
+                            <div class="state-address">${house.location}</div>
+                            <div class="state-address">${house.ver}</div>
+                            <div class="state-address">${house.statetype}</div>
+                            <div class="state-address">
+                                <span>${house.room} Zimmer</span>
+                                <span>${house.area}</span>
+                                <span>${house.loft} Geschoss</span>
+                            </div>
+                            <div class="most-bottom">
+                                <div class="most-left">
+                                    ${house.price} Kaltmiete zzgl. NK
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        </a>`;
+                </li>
+            </a>`;
+            }else if(lang == "us"){
+                html += `
+            <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}">
+                <li class="statelists-imgli">
+                    <div class="statelists-link">
+                        <div class="imgli-box">
+                            <img src="${serverPic + (picsObj[0] || '')}" alt="${house.name}" class="most-img">
+                        </div>
+                        <div class="statelists-right">
+                            <div class="statetitle">${house.name}</div>
+                            <div class="state-address">${house.location}</div>
+                            <div class="state-address">${house.ver}</div>
+                            <div class="state-address">${house.statetype}</div>
+                            <div class="state-address">
+                                <span>${house.room} bed</span>
+                                <span>${house.area} sqft</span>
+                                <span>${house.loft} bathroom</span>
+                            </div>
+                            <div class="most-bottom">
+                                <div class="most-left">
+                                    ${house.price} /month
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </a>`;
+            }else{
+                html += `
+            <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}">
+                <li class="statelists-imgli">
+                    <div class="statelists-link">
+                        <div class="imgli-box">
+                            <img src="${serverPic + (picsObj[0] || '')}" alt="${house.name}" class="most-img">
+                        </div>
+                        <div class="statelists-right">
+                            <div class="statetitle">${house.name}</div>
+                            <div class="state-address">${house.location}</div>
+                            <div class="state-address">${house.ver}</div>
+                            <div class="state-address">${house.statetype}</div>
+                            <div class="state-address">
+                                <span>${house.room} bed</span>
+                                <span>${house.area} sqft</span>
+                                <span>${house.loft} bathroom</span>
+                            </div>
+                            <div class="most-bottom">
+                                <div class="most-left">
+                                    ${house.price} /month
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </a>`;
+            }
 
             // ⬇️ 每2个房源插入1条广告
             if ((index + 1) % 2 === 0) {
@@ -713,36 +797,63 @@
         localStorage.setItem('city', city);
         localStorage.setItem('district', district);
     }
+
+    });
 </script>
 
 <script type="module">
-    import { fetchRandomHousesByState } from './Public/Js/dataGet.js';
+    const lang = getLangFromPath()
+    let fetchDataUrl = ""
+    if(lang == "de"){
+        fetchDataUrl = "./Public/Js/dataGet.js"
+    }else if(lang == "us")
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }else
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }
 
-    async function init() {
-        const urlParams = new URLSearchParams(window.location.search);
-        let display_state = urlParams.get('state');
+    import(fetchDataUrl).then(async module => {
+        const {fetchRandomHousesByState} = module;
 
-        // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
-        if (!display_state) {
-            display_state = 'Berlin'; // 或你希望的默认值
-        }
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let display_state = urlParams.get('state');
 
-        const { data, error } = await fetchRandomHousesByState(display_state,3);
+            // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
+            if (!display_state) {
+                display_state = 'Berlin'; // 或你希望的默认值
+            }
 
-        if (error) {
-            console.error("数据获取失败：", error.message);
-            return;
-        }
+            const {data, error} = await fetchRandomHousesByState(display_state, 3);
 
-        $(document).ready(function () {
+            if (error) {
+                console.error("数据获取失败：", error.message);
+                return;
+            }
 
-            let html =  ``
+            $(document).ready(function () {
 
-            data.forEach((house,index) => {
-                const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + house.mainpic + "/";
-                const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+                let html = ``
 
-                html+= `<li>
+                const lang = getLangFromPath()
+                let picURL = ""
+                if(lang == "de"){
+                    picURL = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/"
+                }else if(lang == "us"){
+                    picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                }else{
+                    picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                }
+
+
+
+                data.forEach((house, index) => {
+                    const serverPic = picURL + house.mainpic + "/";
+                    const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+                    if(lang == "de"){
+                    html += `<li>
         <div class="most-box">
           <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
           <img src="${serverPic + (picsObj[0] || '')}"
@@ -754,42 +865,73 @@
           </div>
           <h5 class="most-tit">${house.price} € Kaltmiete zzgl. NK</h5>
         </div>
+      </li>`}else if(lang == "us"){
+                        html += `<li>
+        <div class="most-box">
+          <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+          <img src="${serverPic + (picsObj[0] || '')}"
+               alt="section-8-pays-for-your-rental-costs" class="most-img">
+          <h5 class="most-tit">${house.name}</h5>
+          <div class="most-bottom">
+            <p class="most-content" data-eusoft-scrollable-element="1"> ${house.location}
+            </p>
+          </div>
+          <h5 class="most-tit">${house.price} /month</h5>
+        </div>
       </li>`
+                    }else{
+                        html += `<li>
+        <div class="most-box">
+          <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+          <img src="${serverPic + (picsObj[0] || '')}"
+               alt="section-8-pays-for-your-rental-costs" class="most-img">
+          <h5 class="most-tit">${house.name}</h5>
+          <div class="most-bottom">
+            <p class="most-content" data-eusoft-scrollable-element="1"> ${house.location}
+            </p>
+          </div>
+          <h5 class="most-tit">${house.price} /month</h5>
+        </div>
+      </li>`
+                    }
 
-                if(index == 0){
-                    html+= `
+                    if (index == 0) {
+                        html += `
                 <li class="statelists-imgli" id = "right_adv">
                         ${returnAdvWord()}
                 </li>`
-                }
+                    }
 
 
-            });
-
-            document.getElementById("aside_list").innerHTML = html
-
-
-            const right_adv = document.getElementById('right_adv')
-            if (right_adv) {
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            loadList_adv2(entry.target);
-                            obs.unobserve(entry.target);
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752564918185-0'); });
-                        }
-                    });
-                }, {
-                    rootMargin: '5px',
                 });
-                observer.observe(right_adv);
-            }
-        });
-    }
 
-    // 调用初始化函数
-    init();
+                document.getElementById("aside_list").innerHTML = html
 
+
+                const right_adv = document.getElementById('right_adv')
+                if (right_adv) {
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                loadList_adv2(entry.target);
+                                obs.unobserve(entry.target);
+                                googletag.cmd.push(function () {
+                                    googletag.display('div-gpt-ad-1752564918185-0');
+                                });
+                            }
+                        });
+                    }, {
+                        rootMargin: '5px',
+                    });
+                    observer.observe(right_adv);
+                }
+            });
+        }
+
+        // 调用初始化函数
+        init();
+
+    });
 </script>
 
 <script>
@@ -805,15 +947,22 @@
 
             document.getElementById("lang_item2").innerText="Bezahlbare Wohnungen"
 
+        }else if(lang == "de")
+        {
+            document.getElementById("title_find").innerText = "Find affordable housing";
+            document.getElementById("total_text").innerText = "Apartments nearby";
+            document.getElementById("aside_text").innerText = "Advisory service for affordable housing";
+
+            document.getElementById("lang_item1").innerText = "Home";
+            document.getElementById("lang_item2").innerText = "Affordable apartments";
         }else
         {
-            document.getElementById("title_find").innerText="Bezahlbaren Wohnraum finden"
-            document.getElementById("total_text").innerText="Wohnungen in der Nähe"
-            document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
+            document.getElementById("title_find").innerText = "Find affordable housing";
+            document.getElementById("total_text").innerText = "Apartments nearby";
+            document.getElementById("aside_text").innerText = "Advisory service for affordable housing";
 
-            document.getElementById("lang_item1").innerText="Startseite"
-
-            document.getElementById("lang_item2").innerText="Bezahlbare Wohnungen"
+            document.getElementById("lang_item1").innerText = "Home";
+            document.getElementById("lang_item2").innerText = "Affordable apartments";
         }
 
         if(isMobile()){

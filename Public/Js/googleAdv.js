@@ -172,7 +172,7 @@ function returnResult_adv3(){
 
 function returnResult_adv4(){
     return `<!-- /23284785848/house_result/result_adv4 -->
-<div id='div-gpt-ad-1752655475092-0' style='min-width: 300px; min-height: 600px;'>
+<div id='div-gpt-ad-1752655475092-0' style='min-width: 300px; min-height: 250px;'>
 </div>`
 }
 

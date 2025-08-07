@@ -360,9 +360,12 @@
             //console.log(lang)
             if(lang == "de"){
                 document.getElementById("lang_index").innerText="Startseite"
+            }else if(lang == "us")
+            {
+                document.getElementById("lang_index").innerText="HOME"
             }else
             {
-                document.getElementById("lang_index").innerText="Startseite"
+                document.getElementById("lang_index").innerText="HOME"
             }
         });
 
@@ -390,9 +393,12 @@
         let alertMessage = ""
         if(lang == "de"){
             alertMessage = "Bitte erst nach vollständiger Angabe absenden."
+        }else if(lang == "us")
+        {
+            alertMessage = "Please complete all fields before submitting.";
         }else
         {
-            alertMessage = "Bitte erst nach vollständiger Angabe absenden."
+            alertMessage = "Please complete all fields before submitting.";
         }
 
 
@@ -405,35 +411,62 @@
 </script>
 
 <script type="module">
-    import { fetchRandomHousesByState, fetchDataById } from './Public/Js/dataGet.js';
+    const lang = getLangFromPath()
+    let fetchDataUrl = ""
+    if(lang == "de"){
+        fetchDataUrl = "./Public/Js/dataGet.js"
+    }else if(lang == "us")
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }else
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }
 
-    async function init() {
-        const urlParams = new URLSearchParams(window.location.search);
+    import(fetchDataUrl).then(async module => {
+        const {fetchRandomHousesByState} = module;
 
-        let display_state = urlParams.get('state');
-        let display_city = urlParams.get('city');
-        let display_district = urlParams.get('district');
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
 
-        // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
-        if (!display_state) {
-            display_state = 'Berlin'; // 或你希望的默认值
-        }
+            let display_state = urlParams.get('state');
+            let display_city = urlParams.get('city');
+            let display_district = urlParams.get('district');
 
-        const { data, error } = await fetchRandomHousesByState(display_state,3);
+            // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
+            if (!display_state) {
+                display_state = 'Berlin'; // 或你希望的默认值
+            }
 
-        if (error) {
-            console.error("获取房源数据失败：", error.message);
-            return;
-        }
+            const {data, error} = await fetchRandomHousesByState(display_state, 3);
 
-        $(document).ready(function () {
-            let html = ``;
+            if (error) {
+                console.error("获取房源数据失败：", error.message);
+                return;
+            }
 
-            data.forEach((house,index) => {
-                const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + house.mainpic + "/";
-                const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+            $(document).ready(function () {
+                let html = ``;
 
-                html += `<li>
+                data.forEach((house, index) => {
+
+                    const lang = getLangFromPath()
+                    let picURL = ""
+                    if(lang == "de"){
+                        picURL = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/"
+                    }else if(lang == "us"){
+                        picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                    }else{
+                        picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                    }
+
+
+                    const serverPic = picURL + house.mainpic + "/";
+                    const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+
+                    if(lang == "de") {
+
+                        html += `<li>
                     <div class="most-box">
                       <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
                       <img src="${serverPic + (picsObj[0] || '')}"
@@ -445,106 +478,189 @@
                       <h5 class="most-tit">${house.price} Kaltmiete zzgl. NK</h5>
                     </div>
                   </li>`;
-
-                if(index == 0){
-                    html+= `
+                    }else if(lang == "us"){
+                        html += `<li>
+                    <div class="most-box">
+                      <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                      <img src="${serverPic + (picsObj[0] || '')}"
+                           alt="section-8-pays-for-your-rental-costs" class="most-img">
+                      <h5 class="most-tit">${house.name}</h5>
+                      <div class="most-bottom">
+                        <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                      </div>
+                      <h5 class="most-tit">${house.price} /month</h5>
+                    </div>
+                  </li>`;
+                    }else{
+                        html += `<li>
+                    <div class="most-box">
+                      <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                      <img src="${serverPic + (picsObj[0] || '')}"
+                           alt="section-8-pays-for-your-rental-costs" class="most-img">
+                      <h5 class="most-tit">${house.name}</h5>
+                      <div class="most-bottom">
+                        <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                      </div>
+                      <h5 class="most-tit">${house.price} /month</h5>
+                    </div>
+                  </li>`;
+                    }
+                    if (index == 0) {
+                        html += `
                 <li class="statelists-imgli" id = "right_adv">
                         ${returnAdvWord()}
                 </li>`
+                    }
+                });
+
+                document.getElementById("aside_list").innerHTML = html;
+
+                const right_adv = document.getElementById('right_adv')
+                if (right_adv) {
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                loadForm_adv3(entry.target);
+                                obs.unobserve(entry.target);
+                                googletag.cmd.push(function () {
+                                    googletag.display('div-gpt-ad-1752648099641-0');
+                                });
+                            }
+                        });
+                    }, {
+                        rootMargin: '5px',
+                    });
+                    observer.observe(right_adv);
                 }
             });
+        }
 
-            document.getElementById("aside_list").innerHTML = html;
-
-            const right_adv = document.getElementById('right_adv')
-            if (right_adv) {
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            loadForm_adv3(entry.target);
-                            obs.unobserve(entry.target);
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752648099641-0'); });
-                        }
-                    });
-                }, {
-                    rootMargin: '5px',
-                });
-                observer.observe(right_adv);
-            }
-        });
-    }
-
-    init();
+        init();
+    });
 </script>
 
 <script type="module">
-    import { fetchRandomHousesByState, fetchDataById } from './Public/Js/dataGet.js';
-
-    async function init() {
-        const urlParams = new URLSearchParams(window.location.search);
-
-        let display_state = urlParams.get('state');
-        let display_city = urlParams.get('city');
-        let display_district = urlParams.get('district');
-
-        // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
-        if (!display_state) {
-            display_state = 'Berlin'; // 或你希望的默认值
-        }
-
-        const { data, error } = await fetchRandomHousesByState(display_state,5);
-
-        if (error) {
-            console.error("获取房源数据失败：", error.message);
-            return;
-        }
-
-        $(document).ready(function () {
-            let html = ``;
-
-            data.forEach((house,index) => {
-                const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + house.mainpic + "/";
-                const picsObj = JSON.parse(house.pics_jsonStr || "[]");
-
-                html += `<li>
-                    <div class="most-box">
-                      <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
-                      <img src="${serverPic + (picsObj[0] || '')}"
-                           alt="section-8-pays-for-your-rental-costs" class="most-img">
-                      <h5 class="most-tit">${house.name}</h5>
-                      <div class="most-bottom">
-                        <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
-                      </div>
-                      <h5 class="most-tit">${house.price} Kaltmiete zzgl. NK</h5>
-                    </div>
-                  </li>`;
-
-                if(index == 0){
-                    html += `<li><div id = "under_listAdv"></div></li>`
-                }
-            });
-
-            document.getElementById("under_list").innerHTML = html;
-
-            const under_listAdv = document.getElementById('under_listAdv')
-            if (under_listAdv) {
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            loadForm_adv5(entry.target);
-                            obs.unobserve(entry.target);
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1753026438231-0'); });
-                        }
-                    });
-                }, {
-                    rootMargin: '5px',
-                });
-                observer.observe(under_listAdv);
-            }
-        });
+    const lang = getLangFromPath()
+    let fetchDataUrl = ""
+    if(lang == "de"){
+        fetchDataUrl = "./Public/Js/dataGet.js"
+    }else if(lang == "us")
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }else
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
     }
 
+    import(fetchDataUrl).then(async module => {
+        const {fetchRandomHousesByState} = module;
+
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            let display_state = urlParams.get('state');
+            let display_city = urlParams.get('city');
+            let display_district = urlParams.get('district');
+
+            // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
+            if (!display_state) {
+                display_state = 'Berlin'; // 或你希望的默认值
+            }
+
+            const { data, error } = await fetchRandomHousesByState(display_state,5);
+
+            if (error) {
+                console.error("获取房源数据失败：", error.message);
+                return;
+            }
+
+            $(document).ready(function () {
+                let html = ``;
+
+                const lang = getLangFromPath()
+                let picURL = ""
+                if(lang == "de"){
+                    picURL = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/"
+                }else if(lang == "us"){
+                    picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                }else{
+                    picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                }
+
+                data.forEach((house,index) => {
+                    const serverPic = picURL + house.mainpic + "/";
+                    const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+
+                    if(lang == "de") {
+
+                        html += `<li>
+                        <div class="most-box">
+                          <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                          <img src="${serverPic + (picsObj[0] || '')}"
+                               alt="section-8-pays-for-your-rental-costs" class="most-img">
+                          <h5 class="most-tit">${house.name}</h5>
+                          <div class="most-bottom">
+                            <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                          </div>
+                          <h5 class="most-tit">${house.price} Kaltmiete zzgl. NK</h5>
+                        </div>
+                      </li>`;
+
+                    }else if(lang == "us"){
+                        html += `<li>
+                        <div class="most-box">
+                          <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                          <img src="${serverPic + (picsObj[0] || '')}"
+                               alt="section-8-pays-for-your-rental-costs" class="most-img">
+                          <h5 class="most-tit">${house.name}</h5>
+                          <div class="most-bottom">
+                            <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                          </div>
+                          <h5 class="most-tit">${house.price} /month</h5>
+                        </div>
+                      </li>`;
+                    }else {
+                        html += `<li>
+                        <div class="most-box">
+                          <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                          <img src="${serverPic + (picsObj[0] || '')}"
+                               alt="section-8-pays-for-your-rental-costs" class="most-img">
+                          <h5 class="most-tit">${house.name}</h5>
+                          <div class="most-bottom">
+                            <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                          </div>
+                          <h5 class="most-tit">${house.price} /month</h5>
+                        </div>
+                      </li>`;
+                    }
+
+                    if(index == 0){
+                        html += `<li><div id = "under_listAdv"></div></li>`
+                    }
+                });
+
+                document.getElementById("under_list").innerHTML = html;
+
+                const under_listAdv = document.getElementById('under_listAdv')
+                if (under_listAdv) {
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                loadForm_adv5(entry.target);
+                                obs.unobserve(entry.target);
+                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1753026438231-0'); });
+                            }
+                        });
+                    }, {
+                        rootMargin: '5px',
+                    });
+                    observer.observe(under_listAdv);
+                }
+            });
+        }
+
     init();
+    });
 </script>
 
 <script>
@@ -556,12 +672,18 @@
             document.getElementById("lang_beizhu").innerText="Hinterlassen Sie hier eine Nachricht."
             document.getElementById("lang_submit").innerText="Kontaktanfrage senden"
             document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
+        }else if(lang == "us")
+        {
+            document.getElementById("lang_name").innerText = "Full name";
+            document.getElementById("lang_beizhu").innerText = "Leave a message here.";
+            document.getElementById("lang_submit").innerText = "Send contact request";
+            document.getElementById("aside_text").innerText = "Advisory service for affordable housing";
         }else
         {
-            document.getElementById("lang_name").innerText="Vollständiger Name"
-            document.getElementById("lang_beizhu").innerText="Hinterlassen Sie hier eine Nachricht."
-            document.getElementById("lang_submit").innerText="Kontaktanfrage senden"
-            document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
+            document.getElementById("lang_name").innerText = "Full name";
+            document.getElementById("lang_beizhu").innerText = "Leave a message here.";
+            document.getElementById("lang_submit").innerText = "Send contact request";
+            document.getElementById("aside_text").innerText = "Advisory service for affordable housing";
         }
 
         if(isMobile()){

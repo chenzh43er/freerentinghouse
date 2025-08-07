@@ -107,9 +107,12 @@
             //console.log(lang)
             if(lang == "de"){
               document.getElementById("lang_index").innerText="Startseite"
+            }else if(lang == "us")
+            {
+              document.getElementById("lang_index").innerText="HOME"
             }else
             {
-              document.getElementById("lang_index").innerText="Startseite"
+              document.getElementById("lang_index").innerText="HOME"
             }
           });
 
@@ -128,9 +131,12 @@
             //console.log(lang)
             if(lang == "de"){
               document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
+            }else if(lang == "us")
+            {
+              document.getElementById("aside_text").innerText = "Advisory service for affordable housing";
             }else
             {
-              document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
+              document.getElementById("aside_text").innerText = "Advisory service for affordable housing";
             }
 
             const aside_adv = document.getElementById('aside_adv')
@@ -213,7 +219,18 @@
   }
 
   $(document).ready(function () {
-    loadScript("./Public/Js/post/postName.js", function () {
+
+    const lang = getLangFromPath()
+    let langPostUrl = ""
+    if(lang == "de"){
+      langPostUrl = "./Public/Js/post/postName.js"
+    }else if(lang == "us"){
+      langPostUrl = "./Public/Js/post/postName_us.js"
+    }else {
+      langPostUrl = "./Public/Js/post/postName_us.js"
+    }
+
+    loadScript(langPostUrl, function () {
 
       const params = new URLSearchParams(window.location.search);
 

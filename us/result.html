@@ -137,7 +137,7 @@
             left: 0;
             position: sticky;
             top: 70px;
-            height: 600px !important;
+            height: 300px !important;
         }
     </style>
 
@@ -162,7 +162,7 @@
 
             googletag.defineSlot('/23284785848/house_result/result_adv3', ['fluid', [300, 250]], 'div-gpt-ad-1752654717056-0').addService(googletag.pubads());
 
-            googletag.defineSlot('/23284785848/house_result/result_adv4', [[300, 600], 'fluid'], 'div-gpt-ad-1752655475092-0').addService(googletag.pubads());
+            googletag.defineSlot('/23284785848/house_result/result_adv4', [[300, 250], 'fluid'], 'div-gpt-ad-1752655475092-0').addService(googletag.pubads());
 
             googletag.defineSlot('/23284785848/house_result/result_adv5', [[300, 250], 'fluid'], 'div-gpt-ad-1753026869757-0').addService(googletag.pubads());
 
@@ -604,14 +604,17 @@
         if(lang == "de"){
             document.getElementById("lang_succeed").innerText="Erfolgreich eingereicht"
             document.getElementById("lang_back").innerText="Zurück zur Startseite"
+            document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
         }else if(lang == "us")
         {
             document.getElementById("lang_succeed").innerText = "Successfully submitted";
             document.getElementById("lang_back").innerText = "Back to homepage";
+            document.getElementById("aside_text").innerText="Affordable Housing Advisory Service"
         }else
         {
             document.getElementById("lang_succeed").innerText = "Successfully submitted";
             document.getElementById("lang_back").innerText = "Back to homepage";
+            document.getElementById("aside_text").innerText="Affordable Housing Advisory Service"
         }
 
         if(isMobile()){
@@ -702,6 +705,7 @@
                 observer.observe(RightBottom_adbox);
             }
         }
+        //document.getElementById("RightBottom_adbox").style.display = "none";
 
         //titleReturn
         document.title = `${returnWebStr()} Result.`;

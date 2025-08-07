@@ -1,8 +1,8 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/+esm';
 
 const supabase = createClient(
-    'https://aabogtftiapiwehgmezt.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhYm9ndGZ0aWFwaXdlaGdtZXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3MDEyNTgsImV4cCI6MjA2NjI3NzI1OH0.qU2mirqnkhRtHNduka5SNwoi2K3q7tNaCJL7EfKMwCY'
+    'https://uoxzcftzwemdrmcmhuhb.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVveHpjZnR6d2VtZHJtY21odWhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxMjkwNDMsImV4cCI6MjA2OTcwNTA0M30.0IVKS1y4dgjgQbNPTonITxki8btCAREEF2VPjL_0jvc'
 );
 
 // 根据过滤条件（state, city, district）获取分页数据
@@ -138,7 +138,7 @@ export async function fetchDataById(id) {
 }
 
 // 根据 display_state 随机获取 5 条房源
-export async function fetchRandomHousesByState(displayState = 'Berlin', count = 5) {
+export async function fetchRandomHousesByState(displayState = 'Arizona', count = 5) {
     try {
         const { data, error } = await supabase.rpc('get_random_houses_by_state', {
             input_state: displayState,

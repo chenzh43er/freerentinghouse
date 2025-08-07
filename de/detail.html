@@ -609,9 +609,12 @@
             //console.log(lang)
             if(lang == "de"){
                 document.getElementById("lang_index").innerText="Startseite"
+            }else if(lang == "us")
+            {
+                document.getElementById("lang_index").innerText="HOME"
             }else
             {
-                document.getElementById("lang_index").innerText="Startseite"
+                document.getElementById("lang_index").innerText="HOME"
             }
         });
 
@@ -624,16 +627,60 @@
 </script>
 
 <script type="module">
-    import { fetchDataById, fetchRandomHousesByState } from './Public/Js/dataGet.js';
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const houseId = urlParams.get('id');
+    const lang = getLangFromPath()
+    let fetchDataUrl = ""
+    if(lang == "de"){
+        fetchDataUrl = "./Public/Js/dataGet.js"
+    }else if(lang == "us")
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }else
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }
 
-    const { data, error } = await fetchDataById(houseId);
+    import(fetchDataUrl).then(async module => {
+        const lang = getLangFromPath()
+        let picURL = ""
+        let roomStr = ""
+        let sqftStr = ""
+        let bathStr = ""
+        let typeStr = ""
+        let ImmobilienStr = ""
+        if(lang == "de"){
+            picURL = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/"
+            roomStr = "Zimmer"
+            sqftStr = "Wohnfläche"
+            bathStr = "Geschoss"
+            typeStr = "Projekttyp"
+            ImmobilienStr = "Immobilien"
+        }else if(lang == "us"){
+            picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+            roomStr = "bed"
+            sqftStr = "sqft"
+            bathStr = "bathroom"
+            typeStr = "type"
+            ImmobilienStr = "supplier"
+        }else{
+            picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+            roomStr = "bed"
+            sqftStr = "sqft"
+            bathStr = "bathroom"
+            typeStr = "type"
+            ImmobilienStr = "supplier"
+        }
 
-    $(document).ready(function() {
+        const {fetchDataById} = module;
 
-        const innerDetailHtml = `
+        const urlParams = new URLSearchParams(window.location.search);
+        const houseId = urlParams.get('id');
+
+        const {data, error} = await fetchDataById(houseId);
+
+        $(document).ready(function () {
+
+            const innerDetailHtml = `
                 <div class="containerMessage" style="border-bottom: 1px solid black;">
                     <div class="boxMessageOneline">
                         <h3>${data.ver}</h3>
@@ -647,19 +694,19 @@
                 <div class="containerMessage">
                     <div class="boxMessage"><p class = "houseMessagediv"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
   <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
-</svg> ${data.room}</p> Zimmer</div>
+</svg> ${data.room}</p> ${roomStr}</div>
                     <div class="boxMessage"><p class = "houseMessagediv"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-aspect-ratio" viewBox="0 0 16 16">
   <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
   <path d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0z"/>
-</svg> ${data.area}</p> Wohnfläche</div>
+</svg> ${data.area}</p> ${sqftStr}</div>
                 </div>
                 <div class="containerMessage" style="border-bottom: 1px solid black;">
                     <div class="boxMessage"><p class = "houseMessagediv"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
   <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
-</svg> ${data.loft}</p> Geschoss</div>
+</svg> ${data.loft}</p> ${bathStr}</div>
                     <div class="boxMessage"><p class = "houseMessagediv"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-text-left" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
-</svg> ${data.statetype}</p> Projekttyp</div>
+</svg> ${data.statetype}</p> ${typeStr}</div>
                 </div>
 
                 <div class="containerMessage">
@@ -676,58 +723,57 @@
                         <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
   <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-</svg> Immobilien：</p> ${data.supplier}
+</svg> ${ImmobilienStr}：</p> ${data.supplier}
                     </div>
                 </div>
             `
 
-        const urlGet = "state=" + data.display_state + "&city=" + data.display_city+ "&district="+ data.display_district
+            const urlGet = "state=" + data.display_state + "&city=" + data.display_city + "&district=" + data.display_district
 
 
+            $('.info').html(innerDetailHtml)
 
-        $('.info').html(innerDetailHtml)
+            const picsObj = JSON.parse(data.pics_jsonStr);
 
-        const picsObj = JSON.parse(data.pics_jsonStr);
+            const serverPic = picURL + data.mainpic + "/"
 
-        const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + data.mainpic + "/"
+            if (picsObj.length === 1) {
+                $('.img-box').html(`<img class="provided-img" src="${serverPic + picsObj[0]}">`)
+            }
 
-        if(picsObj.length === 1){
-            $('.img-box').html(`<img class="provided-img" src="${serverPic+picsObj[0]}">`)
-        }
-
-        if(picsObj.length === 2){
-            $('.img-box').html(`<div>
-                    <img class="provided-img" src="${serverPic+picsObj[0]}">
-                    <img class="provided-img" src="${serverPic+picsObj[1]}">
+            if (picsObj.length === 2) {
+                $('.img-box').html(`<div>
+                    <img class="provided-img" src="${serverPic + picsObj[0]}">
+                    <img class="provided-img" src="${serverPic + picsObj[1]}">
                     </div`)
-        }
+            }
 
-        if(picsObj.length === 3){
-            $('.img-box').html(`<div style="width: 100%;flex: 2;margin-right: 10px;">
+            if (picsObj.length === 3) {
+                $('.img-box').html(`<div style="width: 100%;flex: 2;margin-right: 10px;">
                         <img onclick="openModal(this)" style="margin-bottom: 0;" object-fit: cover
-                        src="${serverPic+picsObj[0]}" alt="Chugach View"
+                        src="${serverPic + picsObj[0]}" alt="Chugach View"
                         class="provided-img scale">
                 </div>
                 <div style="flex: 1;display: flex;flex-direction: column;justify-content: space-between;">
                     <img style="margin-bottom: 0;height: 48%;" onclick="openModal(this)"
-                        src="${serverPic+picsObj[1]}" alt="Chugach View"
+                        src="${serverPic + picsObj[1]}" alt="Chugach View"
                         class="provided-img scale">
                     <img style="margin-bottom: 0;height: 48%;" onclick="openModal(this)"
-                        src="${serverPic+picsObj[2]}" alt="Chugach View"
+                        src="${serverPic + picsObj[2]}" alt="Chugach View"
                         class="provided-img scale">
                 </div>`)
-        }
+            }
 
-        document.getElementById('titleMessage').innerText = data.name
-        //document.getElementById('cdkeyMessage').innerText = "Key:" + data.cdkey
-        document.getElementById('backlast').href = "./list.html?"+urlGet
+            document.getElementById('titleMessage').innerText = data.name
+            //document.getElementById('cdkeyMessage').innerText = "Key:" + data.cdkey
+            document.getElementById('backlast').href = "./list.html?" + urlGet
 
 
-        const mqqhtmlLink = window.location.href;
+            const mqqhtmlLink = window.location.href;
 
-        localStorage.setItem('mqqhtmlLink',mqqhtmlLink)
+            localStorage.setItem('mqqhtmlLink', mqqhtmlLink)
 
-        document.getElementById("shareDiv").innerHTML = `
+            document.getElementById("shareDiv").innerHTML = `
                 <div class="social-share">
                 <ul class="shareUl">
                 <li>
@@ -774,8 +820,8 @@
 </div>
             `
 
-        if(data.msg.length > 10){
-            document.getElementById('message').innerHTML = `
+            if (data.msg.length > 10) {
+                document.getElementById('message').innerHTML = `
                 <h2 class="s-tl">
                     About This Building
                 </h2>
@@ -783,10 +829,10 @@
                    ${data.msg}
                 </div>
                 `;
-        }
+            }
 
-        if(data.info.length > 10){
-            document.getElementById('moreInfo').innerHTML = `
+            if (data.info.length > 10) {
+                document.getElementById('moreInfo').innerHTML = `
                 <h2 class="s-tl">
                     More Info
                 </h2>
@@ -794,50 +840,76 @@
                     ${data.info}
                 </div>
                 `;
-        }
+            }
 
-        if (data.location && typeof data.location === "string") {
-            const locationStrForGoogle = encodeURIComponent(data.location);
-            document.getElementById('Google_mapshow').src =
-                "https://www.google.com/maps/embed/v1/place?key=AIzaSyDuo4Zc22ZUqqlBVJ04Inn2bTzRft3I0AA&q=" + locationStrForGoogle;
-        } else {
-            console.error("Invalid location for Google Maps:", data.location);
-        }
+            if (data.location && typeof data.location === "string") {
+                const locationStrForGoogle = encodeURIComponent(data.location);
+                document.getElementById('Google_mapshow').src =
+                    "https://www.google.com/maps/embed/v1/place?key=AIzaSyDuo4Zc22ZUqqlBVJ04Inn2bTzRft3I0AA&q=" + locationStrForGoogle;
+            } else {
+                console.error("Invalid location for Google Maps:", data.location);
+            }
 
-        document.body.style.display = "block";
+            document.body.style.display = "block";
+        });
     });
 </script>
 
 <script type="module">
-    import { fetchRandomHousesByState, fetchDataById } from './Public/Js/dataGet.js';
+    const lang = getLangFromPath()
+    let fetchDataUrl = ""
+    if(lang == "de"){
+        fetchDataUrl = "./Public/Js/dataGet.js"
+    }else if(lang == "us")
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }else
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }
 
-    async function init() {
-        const urlParams = new URLSearchParams(window.location.search);
+    import(fetchDataUrl).then(async module => {
+        const {fetchRandomHousesByState} = module;
 
-        let display_state = urlParams.get('state');
-        let display_city = urlParams.get('city');
-        let display_district = urlParams.get('district');
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
 
-        // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
-        if (!display_state) {
-            display_state = 'Berlin'; // 或你希望的默认值
-        }
+            let display_state = urlParams.get('state');
+            let display_city = urlParams.get('city');
+            let display_district = urlParams.get('district');
 
-        const { data, error } = await fetchRandomHousesByState(display_state,3);
+            // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
+            if (!display_state) {
+                display_state = 'Berlin'; // 或你希望的默认值
+            }
 
-        if (error) {
-            console.error("获取房源数据失败：", error.message);
-            return;
-        }
+            const {data, error} = await fetchRandomHousesByState(display_state, 3);
 
-        $(document).ready(function () {
-            let html = ``;
+            if (error) {
+                console.error("获取房源数据失败：", error.message);
+                return;
+            }
 
-            data.forEach((house,index) => {
-                const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + house.mainpic + "/";
-                const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+            $(document).ready(function () {
+                let html = ``;
 
-                html += `<li>
+                const lang = getLangFromPath()
+                let picURL = ""
+                if(lang == "de"){
+                    picURL = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/"
+                }else if(lang == "us"){
+                    picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                }else{
+                    picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                }
+
+
+                data.forEach((house, index) => {
+                    const serverPic = picURL + house.mainpic + "/";
+                    const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+
+                    if(lang == "de") {
+                        html += `<li>
                     <div class="most-box">
                       <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
                       <img src="${serverPic + (picsObj[0] || '')}"
@@ -849,19 +921,45 @@
                       <h5 class="most-tit">${house.price} Kaltmiete zzgl. NK</h5>
                     </div>
                   </li>`;
-
-                if(index == 0){
-                    html+= `
+                    }else if(lang == "us"){
+                        html += `<li>
+                    <div class="most-box">
+                      <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                      <img src="${serverPic + (picsObj[0] || '')}"
+                           alt="section-8-pays-for-your-rental-costs" class="most-img">
+                      <h5 class="most-tit">${house.name}</h5>
+                      <div class="most-bottom">
+                        <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                      </div>
+                      <h5 class="most-tit">${house.price} /month</h5>
+                    </div>
+                  </li>`;
+                    }else{
+                        html += `<li>
+                    <div class="most-box">
+                      <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                      <img src="${serverPic + (picsObj[0] || '')}"
+                           alt="section-8-pays-for-your-rental-costs" class="most-img">
+                      <h5 class="most-tit">${house.name}</h5>
+                      <div class="most-bottom">
+                        <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                      </div>
+                      <h5 class="most-tit">${house.price} /month</h5>
+                    </div>
+                  </li>`;
+                    }
+                    if (index == 0) {
+                        html += `
                 <li class="statelists-imgli" id = "right_adv" style="text-align: center">
                         ${returnAdvWord()}
                 </li>`
-                }
-            });
+                    }
+                });
 
-            if(display_district && display_city && display_state){
-                //console.log("ALL")
+                if (display_district && display_city && display_state) {
+                    //console.log("ALL")
 
-                document.getElementById("locate_search").innerHTML=`<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                    document.getElementById("locate_search").innerHTML = `<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
                         <a href="./state.html" itemprop="item" class="cur-bread-crumbs" >
                             <i itemprop="name" style="color: #1174eb;">${display_state}</i>
                         </a>
@@ -882,63 +980,89 @@
                         <meta itemprop="position" content="2">
                     </span>`
 
-            }
+                }
 
 
+                document.getElementById("aside_list").innerHTML = html;
 
-            document.getElementById("aside_list").innerHTML = html;
-
-            const right_adv = document.getElementById('right_adv')
-            if (right_adv) {
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            loadDetail_adv3(entry.target);
-                            obs.unobserve(entry.target);
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752587923449-0'); });
-                        }
+                const right_adv = document.getElementById('right_adv')
+                if (right_adv) {
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                loadDetail_adv3(entry.target);
+                                obs.unobserve(entry.target);
+                                googletag.cmd.push(function () {
+                                    googletag.display('div-gpt-ad-1752587923449-0');
+                                });
+                            }
+                        });
+                    }, {
+                        rootMargin: '5px',
                     });
-                }, {
-                    rootMargin: '5px',
-                });
-                observer.observe(right_adv);
-            }
-        });
-    }
+                    observer.observe(right_adv);
+                }
+            });
+        }
 
-    init();
+        init();
+    });
 </script>
 
 <script type="module">
-    import { fetchRandomHousesByState, fetchDataById } from './Public/Js/dataGet.js';
+    const lang = getLangFromPath()
+    let fetchDataUrl = ""
+    if(lang == "de"){
+        fetchDataUrl = "./Public/Js/dataGet.js"
+    }else if(lang == "us")
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }else
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }
 
-    async function init() {
-        const urlParams = new URLSearchParams(window.location.search);
+    import(fetchDataUrl).then(async module => {
+        const {fetchRandomHousesByState} = module;
 
-        let display_state = urlParams.get('state');
-        let display_city = urlParams.get('city');
-        let display_district = urlParams.get('district');
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
 
-        // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
-        if (!display_state) {
-            display_state = 'Berlin'; // 或你希望的默认值
-        }
+            let display_state = urlParams.get('state');
+            let display_city = urlParams.get('city');
+            let display_district = urlParams.get('district');
 
-        const { data, error } = await fetchRandomHousesByState(display_state,5);
+            // 设定默认值，如果为 undefined 则默认一个州名，例如 'California'
+            if (!display_state) {
+                display_state = 'Berlin'; // 或你希望的默认值
+            }
 
-        if (error) {
-            console.error("获取房源数据失败：", error.message);
-            return;
-        }
+            const {data, error} = await fetchRandomHousesByState(display_state, 5);
 
-        $(document).ready(function () {
-            let html = ``;
+            if (error) {
+                console.error("获取房源数据失败：", error.message);
+                return;
+            }
 
-            data.forEach((house,index) => {
-                const serverPic = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/" + house.mainpic + "/";
-                const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+            $(document).ready(function () {
+                let html = ``;
 
-                html += `<li>
+                data.forEach((house, index) => {
+
+                    const lang = getLangFromPath()
+                    let picURL = ""
+                    if(lang == "de"){
+                        picURL = "https://pub-57bc773ebbc24ef1be9f0d6d9681b286.r2.dev/"
+                    }else if(lang == "us"){
+                        picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                    }else{
+                        picURL = "https://pub-215afa075d9f4c2591b63e17c784fb0b.r2.dev/"
+                    }
+
+                    const serverPic = picURL + house.mainpic + "/";
+                    const picsObj = JSON.parse(house.pics_jsonStr || "[]");
+                    if(lang == "de") {
+                        html += `<li>
                     <div class="most-box">
                       <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
                       <img src="${serverPic + (picsObj[0] || '')}"
@@ -950,36 +1074,65 @@
                       <h5 class="most-tit">${house.price} Kaltmiete zzgl. NK</h5>
                     </div>
                   </li>`;
+                    }else if(lang == "us"){
+                        html += `<li>
+                    <div class="most-box">
+                      <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                      <img src="${serverPic + (picsObj[0] || '')}"
+                           alt="section-8-pays-for-your-rental-costs" class="most-img">
+                      <h5 class="most-tit">${house.name}</h5>
+                      <div class="most-bottom">
+                        <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                      </div>
+                      <h5 class="most-tit">${house.price} /month</h5>
+                    </div>
+                  </li>`;
+                    }else{
+                        html += `<li>
+                    <div class="most-box">
+                      <a href="./detail.html?id=${house.id}&state=${house.display_state}&city=${house.display_city}&district=${house.display_district}" class="href-item"></a>
+                      <img src="${serverPic + (picsObj[0] || '')}"
+                           alt="section-8-pays-for-your-rental-costs" class="most-img">
+                      <h5 class="most-tit">${house.name}</h5>
+                      <div class="most-bottom">
+                        <p class="most-content" data-eusoft-scrollable-element="1">${house.location}</p>
+                      </div>
+                      <h5 class="most-tit">${house.price} /month</h5>
+                    </div>
+                  </li>`;
+                    }
+                    if (index == 0) {
+                        html += `<li><div id = "down_listAdv" style="text-align: center">Advertisment</div></li>`
+                    }
 
-                if(index == 0){
-                    html += `<li><div id = "down_listAdv" style="text-align: center">Advertisment</div></li>`
+                });
+
+                document.getElementById("down_list").innerHTML = html;
+
+                const down_listAdv = document.getElementById('down_listAdv')
+                if (down_listAdv) {
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                loadDetail_adv5(entry.target);
+                                obs.unobserve(entry.target);
+                                googletag.cmd.push(function () {
+                                    googletag.display('div-gpt-ad-1752994696303-0');
+                                });
+                            }
+                        });
+                    }, {
+                        rootMargin: '5px',
+                    });
+                    observer.observe(down_listAdv);
                 }
 
+
             });
+        }
 
-            document.getElementById("down_list").innerHTML = html;
-
-            const down_listAdv = document.getElementById('down_listAdv')
-            if (down_listAdv) {
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            loadDetail_adv5(entry.target);
-                            obs.unobserve(entry.target);
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1752994696303-0'); });
-                        }
-                    });
-                }, {
-                    rootMargin: '5px',
-                });
-                observer.observe(down_listAdv);
-            }
-
-
-        });
-    }
-
-    init();
+        init();
+    });
 </script>
 
 <script>
@@ -1002,11 +1155,16 @@
             document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
             document.getElementById("lang_back").innerText="Zurück zur Liste"
             document.getElementById("lang_submit").innerText="Kontakt"
+        }else if(lang == "us")
+        {
+            document.getElementById("aside_text").innerText = "Advisory service for affordable housing";
+            document.getElementById("lang_back").innerText = "Back to list";
+            document.getElementById("lang_submit").innerText = "Contact us";
         }else
         {
-            document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
-            document.getElementById("lang_back").innerText="Zurück zur Liste"
-            document.getElementById("lang_submit").innerText="Kontakt"
+            document.getElementById("aside_text").innerText = "Advisory service for affordable housing";
+            document.getElementById("lang_back").innerText = "Back to list";
+            document.getElementById("lang_submit").innerText = "Contact us";
         }
 
         if(isMobile()){

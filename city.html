@@ -579,14 +579,14 @@
             <div class="select-box select-now">
                 <div class="prog" data-eusoft-scrollable-element="1"></div>
                 <div class="step_box">
-                    <img src="./Public/Images/dePic.png" alt="deLogo" style="width: 50px;height: 64px;"/>
+                    <img id = "conPic" src="./Public/Images/dePic.png" alt="deLogo" style="width: 50px;height: 64px;"/>
                     <div class="h4" id = "state_label"></div>
                 </div>
             </div>
             <div class="select-box select-now">
                 <div class="prog" data-eusoft-scrollable-element="1"></div>
                 <div class="step_box">
-                    <img src="./Public/Images/statePic.png" alt="deLogo" style="width: 50px;height: 64px;"/>
+                    <img id = "statePic" src="./Public/Images/statePic.png" alt="deLogo" style="width: 50px;height: 64px;"/>
                     <div class="h4" id = "lang_city"></div>
                 </div>
             </div>
@@ -663,7 +663,19 @@
             document.getElementById('footer').innerHTML = data;
         });
 
-    fetch('./aside.html')
+    const lang = getLangFromPath()
+    let langAside = "./aside.html"
+    //console.log(lang)
+    if(lang == "de"){
+        langAside = "./aside.html"
+    }else if(lang == "us"){
+        langAside = "./asideUS.html"
+    }else{
+        langAside = "./asideUS.html"
+    }
+
+
+    fetch(langAside)
         .then(res => res.text())
         .then(data => {
             document.getElementById('asidePage').innerHTML = data;
@@ -803,6 +815,8 @@ ${item.display_city}</div></div>
     5. Weitere Arten von bezahlbarem Wohnraum
     <div></div>
 </p>`
+            document.getElementById("conPic").src = "./Public/Images/dePic.png"
+            document.getElementById("statePic").src = "./Public/Images/statePic.png"
         }else if (lang == "us")
         {
             document.getElementById("title_find").innerText = "Find affordable housing";
@@ -830,7 +844,10 @@ ${item.display_city}</div></div>
     5. Other types of affordable housing
     <div></div>
 </p>`;
-
+            document.getElementById("conPic").src = "./Public/Images/amPic.png"
+            document.getElementById("statePic").src = "./Public/Images/amSPic.png"
+            document.getElementById("conPic").style.width = "64px"
+            document.getElementById("statePic").style.width = "64px"
         }else
         {
             document.getElementById("title_find").innerText = "Find affordable housing";
@@ -858,6 +875,10 @@ ${item.display_city}</div></div>
     5. Other types of affordable housing
     <div></div>
 </p>`;
+            document.getElementById("conPic").src = "./Public/Images/amPic.png"
+            document.getElementById("statePic").src = "./Public/Images/amSPic.png"
+            document.getElementById("conPic").style.width = "64px"
+            document.getElementById("statePic").style.width = "64px"
 
         }
     });

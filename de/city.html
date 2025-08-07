@@ -579,14 +579,14 @@
             <div class="select-box select-now">
                 <div class="prog" data-eusoft-scrollable-element="1"></div>
                 <div class="step_box">
-                    <img src="./Public/Images/dePic.png" alt="deLogo" style="width: 50px;height: 64px;"/>
+                    <img id = "conPic" src="./Public/Images/dePic.png" alt="deLogo" style="width: 50px;height: 64px;"/>
                     <div class="h4" id = "state_label"></div>
                 </div>
             </div>
             <div class="select-box select-now">
                 <div class="prog" data-eusoft-scrollable-element="1"></div>
                 <div class="step_box">
-                    <img src="./Public/Images/statePic.png" alt="deLogo" style="width: 50px;height: 64px;"/>
+                    <img id = "statePic" src="./Public/Images/statePic.png" alt="deLogo" style="width: 50px;height: 64px;"/>
                     <div class="h4" id = "lang_city"></div>
                 </div>
             </div>
@@ -647,9 +647,12 @@
             //console.log(lang)
             if(lang == "de"){
                 document.getElementById("lang_index").innerText="Startseite"
+            }else if(lang == "us")
+            {
+                document.getElementById("lang_index").innerText="HOME"
             }else
             {
-                document.getElementById("lang_index").innerText="Startseite"
+                document.getElementById("lang_index").innerText="HOME"
             }
         });
 
@@ -660,7 +663,19 @@
             document.getElementById('footer').innerHTML = data;
         });
 
-    fetch('./aside.html')
+    const lang = getLangFromPath()
+    let langAside = "./aside.html"
+    //console.log(lang)
+    if(lang == "de"){
+        langAside = "./aside.html"
+    }else if(lang == "us"){
+        langAside = "./asideUS.html"
+    }else{
+        langAside = "./asideUS.html"
+    }
+
+
+    fetch(langAside)
         .then(res => res.text())
         .then(data => {
             document.getElementById('asidePage').innerHTML = data;
@@ -668,9 +683,12 @@
             //console.log(lang)
             if(lang == "de"){
                 document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
+            }else if(lang == "us")
+            {
+                document.getElementById("aside_text").innerText = "Affordable housing advisory service";
             }else
             {
-                document.getElementById("aside_text").innerText="Beratungsdienst für bezahlbaren Wohnraum"
+                document.getElementById("aside_text").innerText = "Affordable housing advisory service";
             }
 
             const aside_adv = document.getElementById('aside_adv')
@@ -691,8 +709,23 @@
         });
 </script>
 <script type="module">
+    const lang = getLangFromPath()
+    let fetchDataUrl = ""
+    if(lang == "de"){
+        fetchDataUrl = "./Public/Js/dataGet.js"
+    }else if(lang == "us")
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }else
+    {
+        fetchDataUrl = "./Public/Js/dataGet_us.js"
+    }
 
-    import {fetchCitiesByState} from './Public/Js/dataGet.js';
+
+
+    import(fetchDataUrl).then(async module => {
+        const { fetchCitiesByState } = module;
+
 
     const params = new URLSearchParams(window.location.search);
     const display_state = params.get('state');  // "Tom"
@@ -749,6 +782,7 @@ ${item.display_city}</div></div>
             observer.observe(ddr_adv);
         }
     });
+    });
 
 </script>
 
@@ -781,32 +815,71 @@ ${item.display_city}</div></div>
     5. Weitere Arten von bezahlbarem Wohnraum
     <div></div>
 </p>`
+            document.getElementById("conPic").src = "./Public/Images/dePic.png"
+            document.getElementById("statePic").src = "./Public/Images/statePic.png"
+        }else if (lang == "us")
+        {
+            document.getElementById("title_find").innerText = "Find affordable housing";
+
+            document.getElementById("lang_city").innerText = "Select city";
+            document.getElementById("lang_district").innerText = "Select district";
+            document.getElementById("lang_apartment").innerText = "Select apartment";
+
+            document.getElementById("lang_how1").innerText = "Affordable housing is available at subsidized prices for low-income individuals thanks to government subsidies and incentives. Monthly rent starts at just €300, which is significantly below the usual market rate!";
+
+            document.getElementById("lang_how2").innerHTML = `<p class="how-to" id="lang_how2">
+    Find affordable housing for:<br>
+    1. Seniors<br>
+    2. People with disabilities<br>
+    3. Homeless individuals<br>
+    4. Single mothers<br>
+    5. Low-income families<br>
+    6. Other groups of people<br><br>
+
+    Our affordable housing options include:<br>
+    1. HUD housing<br>
+    2. Social housing<br>
+    3. Section 8 housing<br>
+    4. Housing with low-income tax credits<br>
+    5. Other types of affordable housing
+    <div></div>
+</p>`;
+            document.getElementById("conPic").src = "./Public/Images/amPic.png"
+            document.getElementById("statePic").src = "./Public/Images/amSPic.png"
+            document.getElementById("conPic").style.width = "64px"
+            document.getElementById("statePic").style.width = "64px"
         }else
         {
-            document.getElementById("title_find").innerText="Bezahlbaren Wohnraum finden"
+            document.getElementById("title_find").innerText = "Find affordable housing";
 
-            document.getElementById("lang_city").innerText="Stadt auswählen"
-            document.getElementById("lang_district").innerText="Bezirk auswählen"
-            document.getElementById("lang_apartment").innerText="Wohnung auswählen"
+            document.getElementById("lang_city").innerText = "Select city";
+            document.getElementById("lang_district").innerText = "Select district";
+            document.getElementById("lang_apartment").innerText = "Select apartment";
 
-            document.getElementById("lang_how1").innerText="Bezahlbarer Wohnraum ist dank staatlicher Fördermittel und Anreize für einkommensschwache Personen zu subventionierten Preisen verfügbar. Die monatliche Miete beginnt bereits bei 300 €, was deutlich unter dem üblichen Marktpreis liegt!"
-            document.getElementById("lang_how2").innerHTML=`<p class="how-to" id="lang_how2">
-    Finden Sie bezahlbaren Wohnraum für:<br>
-    1. Senioren<br>
-    2. Menschen mit Behinderung<br>
-    3. Obdachlose<br>
-    4. Alleinerziehende Mütter<br>
-    5. Familien mit geringem Einkommen<br>
-    6. Andere Personengruppen<br><br>
+            document.getElementById("lang_how1").innerText = "Affordable housing is available at subsidized prices for low-income individuals thanks to government subsidies and incentives. Monthly rent starts at just €300, which is significantly below the usual market rate!";
 
-    Unser Angebot an bezahlbarem Wohnraum umfasst:<br>
-    1. HUD-Wohnungen<br>
-    2. Sozialwohnungen<br>
-    3. Wohnungen mit Section-8-Förderung<br>
-    4. Wohnungen mit Steuergutschrift für einkommensschwache Haushalte<br>
-    5. Weitere Arten von bezahlbarem Wohnraum
+            document.getElementById("lang_how2").innerHTML = `<p class="how-to" id="lang_how2">
+    Find affordable housing for:<br>
+    1. Seniors<br>
+    2. People with disabilities<br>
+    3. Homeless individuals<br>
+    4. Single mothers<br>
+    5. Low-income families<br>
+    6. Other groups of people<br><br>
+
+    Our affordable housing options include:<br>
+    1. HUD housing<br>
+    2. Social housing<br>
+    3. Section 8 housing<br>
+    4. Housing with low-income tax credits<br>
+    5. Other types of affordable housing
     <div></div>
-</p>`
+</p>`;
+            document.getElementById("conPic").src = "./Public/Images/amPic.png"
+            document.getElementById("statePic").src = "./Public/Images/amSPic.png"
+            document.getElementById("conPic").style.width = "64px"
+            document.getElementById("statePic").style.width = "64px"
+
         }
     });
 </script>
