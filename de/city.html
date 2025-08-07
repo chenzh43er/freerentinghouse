@@ -745,7 +745,7 @@
 ${item.display_city}</div></div>
 </a>
 </li>`;
-            if((index+1) % 12 == 0){
+            if((index+1) % 12 == 0 && data.length > 12){
                 innerStr += `<li class = "divider-wrap state_advClass"><div>${returnAdvWord()}</div></li>`
             }
         });
