@@ -18,3 +18,21 @@ function isMobile() {
 function returnWebStr(){
     return "Freerentinghouse.info"
 }
+
+function loadScript(src, callback) {
+    let script = document.createElement("script");
+    script.src = src;
+    script.type = "text/javascript";
+    script.async = true;
+
+    script.onload = function () {
+        ////console.log(`${src} 加载完成`);
+        if (callback) callback(); // 加载完成后执行回调函数
+    };
+
+    script.onerror = function () {
+        //console.error(`${src} 加载失败`);
+    };
+
+    document.head.appendChild(script); // 插入到 `head` 中
+}
